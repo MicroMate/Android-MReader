@@ -1,4 +1,4 @@
-package com.micromate.mreader.model;
+package com.micromate.mreader.navigationdrawer;
 
 public class NavDrawerItem {
     

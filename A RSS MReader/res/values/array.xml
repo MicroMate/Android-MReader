@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <!-- AlertDialog Feed List Items -->
+    <string-array name="feedlist_option_array">
+        <item >Delete</item>
+   
+    </string-array>
+</resources>

@@ -1,11 +1,10 @@
-package com.micromate.mreader.adapter;
+package com.micromate.mreader.navigationdrawer;
 
 //import info.androidhive.slidingmenu.R;
 
 import java.util.ArrayList;
 
 import com.micromate.mreader.R;
-import com.micromate.mreader.model.NavDrawerItem;
 
  
 import android.app.Activity;

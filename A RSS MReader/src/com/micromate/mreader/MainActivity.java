@@ -1,3 +1,5 @@
+/* Feed - RSS channel*/
+
 package com.micromate.mreader;
 
 import java.util.ArrayList;
@@ -17,8 +19,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.micromate.mreader.adapter.NavDrawerListAdapter;
-import com.micromate.mreader.model.NavDrawerItem;
+import com.micromate.mreader.database.DBoperacje;
+import com.micromate.mreader.navigationdrawer.NavDrawerItem;
+import com.micromate.mreader.navigationdrawer.NavDrawerListAdapter;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -38,6 +41,10 @@ public class MainActivity extends Activity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
  
+    // my
+    private DBoperacje baza;
+    private String feedQty; //feed quantity
+     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,20 +64,24 @@ public class MainActivity extends Activity {
  
         navDrawerItems = new ArrayList<NavDrawerItem>();
  
+        // my
+        baza = new DBoperacje(this);
+        feedQty = String.valueOf(baza.readAllRssChannels().size());
+        
         // adding nav drawer items to array
         // Home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1), true, "22"));
-        // Photos
+        // Feed List
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1), true, feedQty));
+        // Add Feed
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-        // Communities, Will add a counter here
- /*       navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-        // Pages
+        // Refresh
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        // Setting
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
-  */       
+        // 
+  //      navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+         
  
         // Recycle the typed array
         navMenuIcons.recycle();
@@ -78,8 +89,8 @@ public class MainActivity extends Activity {
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
  
         // setting the nav drawer list adapter
-        adapter = new NavDrawerListAdapter(getApplicationContext(),
-                navDrawerItems);
+        adapter = new NavDrawerListAdapter(getApplicationContext(),navDrawerItems);
+        
         mDrawerList.setAdapter(adapter);
  
         // enabling action bar app icon and behaving it as toggle button
@@ -98,11 +109,20 @@ public class MainActivity extends Activity {
             }
  
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to hide action bar icons
+                
+            	getActionBar().setTitle(mDrawerTitle);
+                
+            	//Refreshing Quantity of Feeds on Navigation List
+            	feedQty = String.valueOf(baza.readAllRssChannels().size());
+            	navDrawerItems.get(1).setCount(feedQty);
+            	adapter.notifyDataSetChanged();
+            	
+            	// calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
+            
             }
         };
+        
         mDrawerLayout.setDrawerListener(mDrawerToggle);
  
         if (savedInstanceState == null) {
@@ -167,18 +187,20 @@ public class MainActivity extends Activity {
             fragment = new HomeFragment();
             break;
         case 1:
-            fragment = new AddFeedFragment();
+        	fragment = new FeedListFragment();
             break; 
         case 2:
-            fragment = new SettingFragment();
+            fragment = new FeedAddRssFragment();        
             break;
-     /*   case 3:
-            fragment = new CommunityFragment();
+        case 3:
+            fragment = new FeedListFragment();
+            FeedUpdateTask feedUpdateTask = new FeedUpdateTask(this);
+            feedUpdateTask.execute();
             break;
         case 4:
-            fragment = new PagesFragment();
+            fragment = new SettingFragment();
             break;
-        case 5:
+   /*     case 5:
             fragment = new WhatsHotFragment();
             break; */
  
