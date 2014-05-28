@@ -44,7 +44,7 @@ public class FeedListFragment extends Fragment {
 		rssChannels = new ArrayList<Feed>();
 		
 		/*Getting all RSS channels from Data Base*/
-		baza = new DBoperacje(getActivity());  	// W klasie pochodnej od FRAGMENT context ma˝na przekazaç uzywajàc getActivity(), zwraca CONTEXT activity        
+		baza = new DBoperacje(getActivity()); 
 		rssChannels = baza.readAllRssChannels(); //getting all Feeds	    
 	    feedListAdapter = new FeedListAdapter(getActivity(), R.layout.fragment_rss_channels, rssChannels);
 	    listView.setAdapter(feedListAdapter);
@@ -60,10 +60,12 @@ public class FeedListFragment extends Fragment {
 				/**/
 				Bundle bundle = new Bundle();
 				bundle.putInt("CHANNEL_ID", rssChannels.get(pos).get_id());
+				bundle.putString("FEED_LINK", rssChannels.get(pos).getLink());	
 				fragment.setArguments(bundle);
 				
 				FragmentManager fragmentManager = getFragmentManager();
-		        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit();
+				//kilka metod wywo∏anych w jednym wierszu, w klasie ArticleFragment w paru wierszach 
+		        fragmentManager.beginTransaction().replace(R.id.frame_container, fragment).addToBackStack(null).commit();
 						
 			}
 		});
@@ -108,9 +110,6 @@ public class FeedListFragment extends Fragment {
 			}
 			
 		});
-	
-		
-		
 		
 		return rootView;
 		

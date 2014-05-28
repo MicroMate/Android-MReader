@@ -13,7 +13,7 @@
         android:paddingBottom="4dip"
         android:paddingLeft="8dip"
         android:paddingTop="8dip"
-        android:text="@string/channel_row_title"
+        android:text="@string/feed_title"
         android:textColor="#1a1a1a"
         android:textSize="18sp" />
 
@@ -26,7 +26,7 @@
         android:layout_below="@+id/channel_title"
         android:paddingBottom="6dip"
         android:paddingLeft="8dip"
-        android:text="@string/channel_row_link"
+        android:text="@string/feed_link"
         android:textColor="#c00300"
         android:textSize="15sp" />
     
