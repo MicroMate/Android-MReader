@@ -39,10 +39,17 @@
     <string name="url_submit">Submit</string>
     <string name="url_website">http://</string>
     
+    
+    <!-- Preferences -->
+    <string name="pref_update">Update</string> 
+    <string name="pref_update_enabled">Enabled</string>
+    <string name="pref_update_enabled_summary">Automatic update an articles</string> 
    
+    <string name="pref_noti">Notifications</string>
+    <string name="pref_noti_enabled">Enabled</string>
+    <string name="pref_noti_enabled_summary">Controls the appearance of notification </string>
+    <string name="pref_noti_interval">Notifications interval</string>
+    <string name="pref_noti_interval_summary">interval time</string> 
   
-  	
-  	
-    	
     
 </resources>
