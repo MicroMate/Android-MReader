@@ -1,6 +1,8 @@
 package com.micromate.mreader;
 
 
+import com.micromate.mreader.service.ServiceAlarmManager;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -42,19 +44,19 @@ public class SettingFragment extends PreferenceFragment {
 		
 		 Log.i(LOG_TAG, "Notifications: "+powiadomienia);
 		 Log.i(LOG_TAG, "Notification intervals: " +intervalSecond);
-		 /*	//klasa zarzadza us¸uga
-			sheduleAlarmService = new SheduleAlarmService(this);
+		 
+		 //klasa zarzadza us¸uga
+		 ServiceAlarmManager serviceAlarmMenager = new ServiceAlarmManager(getActivity());
 			
+		 serviceAlarmMenager.intervalSecond(Integer.parseInt(intervalSecond));
 			
-			sheduleAlarmService.intervalSecond(Integer.parseInt(intervalSecond));
-			
-			if (powiadomienia) {
-				sheduleAlarmService.start();
-			}
-			else {
-				sheduleAlarmService.stop();
-			} */
-		}
+		 if (powiadomienia) {
+				serviceAlarmMenager.start();
+		 }
+		 else {
+				serviceAlarmMenager.stop();
+		 } 
+	 }
 	 
 	 
 	 

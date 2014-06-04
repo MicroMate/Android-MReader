@@ -7,16 +7,17 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.micromate.mreader.database.*;
-
 import android.util.Log;
+
+import com.micromate.mreader.database.Article;
+import com.micromate.mreader.database.Feed;
 
 public class FeedRssSaxParser extends DefaultHandler {
 	
 	private Feed feed;  //RSS Channel
 	
 	private Article article;
-	private List<Article> articles = new ArrayList<Article>(); 
+	private List<Article> articles;
 		
 	private StringBuilder builderText; //dla przechwytywania znak—w w metodzie charakters
 	
@@ -28,21 +29,30 @@ public class FeedRssSaxParser extends DefaultHandler {
 	
 	private boolean newFeed = false;
 	//private boolean updateArticles = false;
+	private boolean checkNewArticle = false;
+	private boolean isNewArticle = false;
 
 	private String latestArticleDate ="0000-00-00 00:00:00";
 	//private List<String> newArticles;
 	
 	private static final String LOG_TAG = "FeedRssSaxParser"; 
 	
-	/*Constructors*/
-	public FeedRssSaxParser(){ //
+	//Constructors for adding new feed
+	public FeedRssSaxParser(){ //1
 		newFeed = true;
 		feed = new Feed();
+		articles = new ArrayList<Article>();
 	}
-	
-	public FeedRssSaxParser(String latestArticleDate){ //
+	//Constructor for updating new Articles
+	public FeedRssSaxParser(String latestArticleDate){ //2
 		this.latestArticleDate = latestArticleDate;
+		articles = new ArrayList<Article>();
 		//updateArticles = true;
+	}
+	//Constructor for checking whether new Article is released - argument: checkNewArticle must be set true
+	public FeedRssSaxParser(String latestArticleDate, boolean checkNewArticle){ //3
+		this.latestArticleDate = latestArticleDate;
+		this.checkNewArticle = checkNewArticle;
 	}
 	
 	
@@ -55,23 +65,19 @@ public class FeedRssSaxParser extends DefaultHandler {
 		return articles;
 	}
 	
-	//public List<String> getNewArticles() {
-	//	return newArticles;
-	//}
+	public boolean isNewArticle() {
+		return isNewArticle;
+	}
+	
+	
 	
 	/**/
 	@Override
 	public void startDocument() throws SAXException {
 		// TODO Auto-generated method stub
 		super.startDocument();
-		
-		builderText = new StringBuilder();
-		//articles = new ArrayList<Article>();			
-		
-		//latestArticleDate = baza.getLatestArticleDate();
-		//newArticles = new ArrayList<String>();
-		
-		Log.i(LOG_TAG, "startDOCUMENT");
+		//Log.i(LOG_TAG, "startDOCUMENT");
+		builderText = new StringBuilder();	
 	}
 	
 	
@@ -135,8 +141,22 @@ public class FeedRssSaxParser extends DefaultHandler {
 				article.setUrl(builderText.toString().trim());
 			else if(localName.equalsIgnoreCase("description"))
 				article.setDescription(builderText.toString().trim());
-			else if(localName.equals("pubDate"))
+			else if(localName.equals("pubDate")) {
 				article.setPubDate(builderText.toString());
+				
+				// if checking whether new article is released (third Constructor)
+				if(checkNewArticle) {  
+					if(latestArticleDate.compareTo(article.getDate()) < 0 ) {
+						isNewArticle = true;
+						Log.d(LOG_TAG, "New Article date:"+article.getDate());
+					}
+					else
+						Log.d(LOG_TAG, "No new Article, latest date"+article.getDate());
+					
+					throw new SAXException(); 
+				}
+				
+			}
 			else if(localName.equals("category"))
 				article.setCategory(builderText.toString());
 		
@@ -149,13 +169,12 @@ public class FeedRssSaxParser extends DefaultHandler {
 					inItem = false;
 				}
 				else
-					throw new SAXException(); //if no new article
+					throw new SAXException(); //if no more new articles
 				
 			}	
 		}
 		
 		builderText.setLength(0); 
 	} 
-	
-	
+		
 }
