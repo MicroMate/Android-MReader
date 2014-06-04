@@ -152,7 +152,7 @@ public class NewArticleService extends Service{
 		Notification noti = new Notification.Builder(this)
         	.setContentTitle("New Article")
         	.setContentText("Click here to update")
-        	.setSmallIcon(R.drawable.ic_launcher)
+        	.setSmallIcon(R.drawable.ic_mreader)
         	//.setLargeIcon(aBitmap)
         	.setContentIntent(pIntent)
         	.build();  //requires min API level 16
