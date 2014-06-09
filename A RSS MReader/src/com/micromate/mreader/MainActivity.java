@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -209,13 +210,16 @@ public class MainActivity extends Activity {
         }
  
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager
-            	.beginTransaction()
-            	.replace(R.id.frame_container, fragment)
-            	.addToBackStack(null)
-            	.commit();
- 
+        	FragmentManager fragmentManager = getFragmentManager();
+        	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        	fragmentTransaction.replace(R.id.frame_container, fragment);
+        	if (position != 4)     //if not Setting fragment
+        		fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); //go back to top
+        	else
+            	fragmentTransaction.addToBackStack(null); //add Setting fragment transaction to back stack. 
+                  
+            fragmentTransaction.commit();
+           
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);

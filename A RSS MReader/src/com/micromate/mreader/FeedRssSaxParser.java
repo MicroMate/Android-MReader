@@ -139,8 +139,8 @@ public class FeedRssSaxParser extends DefaultHandler {
 			}	
 			else if(localName.equalsIgnoreCase("link"))
 				article.setUrl(builderText.toString().trim());
-			else if(localName.equalsIgnoreCase("description"))
-				article.setDescription(builderText.toString().trim());
+			//else if(localName.equalsIgnoreCase("description"))
+			//	article.setDescription(builderText.toString().trim());
 			else if(localName.equals("pubDate")) {
 				article.setPubDate(builderText.toString());
 				
@@ -160,6 +160,9 @@ public class FeedRssSaxParser extends DefaultHandler {
 			else if(localName.equals("category"))
 				article.setCategory(builderText.toString());
 		
+			else if(localName.equalsIgnoreCase("encoded"))
+				article.setDescription(builderText.toString().trim());
+			
 			else if(localName.equalsIgnoreCase("item")) {  
 				
 				//
