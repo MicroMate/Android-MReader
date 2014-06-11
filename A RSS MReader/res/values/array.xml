@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Feed list</item>
+        <item >Add feed </item>
+        <item >Refresh</item>
+        <item >Settings</item>
+      </string-array>
+     
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_action_view_as_list</item>
+        <item>@drawable/ic_action_new</item>
+        <item>@drawable/ic_action_refresh</item>
+        <item>@drawable/ic_action_settings</item>
+    </array>
+    
+    
+    
      <!-- AlertDialog Feed List Items -->
     <string-array name="feedlist_option_array">
         <item >Delete</item>

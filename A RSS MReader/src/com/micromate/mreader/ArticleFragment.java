@@ -141,7 +141,7 @@ public class ArticleFragment extends Fragment{ //1
 	        protected Drawable doInBackground(String... inputURL) {
 	            //String source = params[0];
 	            //return fetchDrawable(source);
-	        	Drawable drawable = getResources().getDrawable( R.drawable.ic_mreader);
+	        	Drawable drawable = getResources().getDrawable( R.drawable.ic_action_picture);
 	        	try {
 	                //InputStream is = fetch(urlString);
 	            	URL url = new URL(inputURL[0]);
