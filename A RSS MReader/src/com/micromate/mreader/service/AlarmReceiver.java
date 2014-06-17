@@ -13,7 +13,8 @@ public class AlarmReceiver extends BroadcastReceiver{
 	public void onReceive(Context context, Intent arg1) {
 		// TODO Auto-generated method stub
 			Log.i("AlarmReceiver","Start Service");
-			Intent usluga = new Intent(context, NewArticleService.class);
+			//Intent usluga = new Intent(context, NewArticleService.class); //Only checking if new article released (SAX parser)
+			Intent usluga = new Intent(context, UpdateArticlesService.class); //Updating all new articles (ROME parser
 			context.startService(usluga);	
 	
 	}

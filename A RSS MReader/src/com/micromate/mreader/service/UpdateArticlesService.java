@@ -1,22 +1,10 @@
 /*
- * This Service (class NewArticleService) only check whether new Article is released and notify application user
- * NewArticleService for check new article using SAX Parser
+ * This Service Updating Articles using ROME parser
  */
-
 package com.micromate.mreader.service;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -26,17 +14,16 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.micromate.mreader.FeedRssSaxParser;
+import com.micromate.mreader.FeedRomeParser;
 import com.micromate.mreader.MainActivity;
 import com.micromate.mreader.R;
+import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
 
-public class NewArticleService extends Service{
-
-	private FeedRssSaxParser feedRssSaxParser;
+public class UpdateArticlesService extends Service {
+	private FeedRomeParser feedRomeParser;
 	private DBoperacje baza;
 	
 	private static final String	LOG_TAG = "MyService";
@@ -92,43 +79,29 @@ public class NewArticleService extends Service{
 		protected Boolean doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			
+			boolean newArticle = false;
+			
 			List<Feed> feed = new ArrayList<Feed>(); 
 			feed = baza.readAllRssChannels();
 			
-			//checking whether an article is released
-			for (Feed f: feed){		
-			
-				try {
-					URL xmlUrl = new URL(f.getRssLink());
-	        
-					SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-					SAXParser parser = saxFactory.newSAXParser();
-					XMLReader reader = parser.getXMLReader();
-					
-					//SAX Parser constructor for New Articel Checking (checking whether new articles)
-					feedRssSaxParser = new FeedRssSaxParser(baza.getLatestArticleDateByID(f.get_id()),true);
-					reader.setContentHandler(feedRssSaxParser);
-				
-					InputSource inputSource = new InputSource(xmlUrl.openStream());
-					reader.parse(inputSource);	
+			// Parser ROME - Updating all articles:
+			for (Feed f: feed){			
+				Log.i(LOG_TAG,"Updating feed: "+f.getRssLink());
 		
-			
-				}catch(ParserConfigurationException pce){
-					Log.e(LOG_TAG,"ParserConfigurationException"+pce);
-				}catch(SAXException se){
-					Log.e(LOG_TAG,"SAXException"+se);
-				}catch(IOException e){
-					Log.e(LOG_TAG,"IOException"+e);
+				feedRomeParser = new FeedRomeParser();
+				if (feedRomeParser.getNewArticles(f.getRssLink(), baza.getLatestArticleDateByID(f.get_id())))
+				{
+					//Adding new Articles to Database			
+					List<Article> articles = new ArrayList<Article>();
+					articles = feedRomeParser.getArticles();
+					//Adding RSS channel articles by channel ID
+					for (Article a: articles){
+						baza.addArticleByID(a, f.get_id());
+					}
+					newArticle = true;
 				}
-			
-				// if is new article break loop
-				if (feedRssSaxParser.isNewArticle()){
-					break;
-				}
-			}
-				
-			return feedRssSaxParser.isNewArticle();
-			
+			}	
+			return newArticle;	//if new article return true	
 		}
 		
 		@Override
@@ -136,8 +109,7 @@ public class NewArticleService extends Service{
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			
-			if (result) {
-				Toast.makeText(getApplicationContext(), "NEW ARTICLE",Toast.LENGTH_SHORT).show();
+			if (result) { //if result/new article = true create notification
 				createNewArticleNotification();
 			}
 			

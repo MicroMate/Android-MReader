@@ -1,27 +1,25 @@
 package com.micromate.mreader;
 
 
-import com.micromate.mreader.service.ServiceAlarmManager;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class SettingFragment extends PreferenceFragment {
-    
-	private static final String LOG_TAG= "SettingFragment"; 
-	
+import com.micromate.mreader.service.ServiceAlarmManager;
 
+public class SettingFragment extends PreferenceFragment {
+ 
+	private static final String LOG_TAG= "SettingFragment"; 
+		
 	@Override
      public void onCreate(final Bundle savedInstanceState) {	 
          super.onCreate(savedInstanceState);
  		 Log.i(LOG_TAG, "onCreate");
          
          //Inflates the given XML resource
-         addPreferencesFromResource(R.xml.preferences);
-     
+         addPreferencesFromResource(R.xml.preferences); 
 	 }
 	 
 	@Override
@@ -39,9 +37,10 @@ public class SettingFragment extends PreferenceFragment {
 		 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			
 		 //pobranie rezultatow ustawien urzytkownika
-		 boolean powiadomienia = sharedPreferences.getBoolean("prefNotification", false);
+		 boolean updateEnable = sharedPreferences.getBoolean("prefUpdateEnable", false);	 
 		 String intervalSecond = sharedPreferences.getString("prefIntervalSecond", "60");
-		
+		 boolean powiadomienia = sharedPreferences.getBoolean("prefNotification", false);
+			
 		 Log.i(LOG_TAG, "Notifications: "+powiadomienia);
 		 Log.i(LOG_TAG, "Notification intervals: " +intervalSecond);
 		 
@@ -50,7 +49,7 @@ public class SettingFragment extends PreferenceFragment {
 			
 		 serviceAlarmMenager.intervalSecond(Integer.parseInt(intervalSecond));
 			
-		 if (powiadomienia) {
+		 if (updateEnable) {
 				serviceAlarmMenager.start();
 		 }
 		 else {

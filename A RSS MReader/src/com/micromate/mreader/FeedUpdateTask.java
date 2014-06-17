@@ -1,18 +1,7 @@
 package com.micromate.mreader;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,12 +13,14 @@ import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
 
-public class FeedUpdateTask extends AsyncTask<Void, Void, Integer> {
+public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 	
 	private Context context;
 	private DBoperacje baza;
-	private FeedRssSaxParser feedRssSaxParser;
+	//private FeedRssSaxParser feedRssSaxParser;
+	private FeedRomeParser feedRomeParser;
 	private ProgressDialog pDialog;
+	
 	
 	private static final String LOG_TAG = "FeedUpdateTask";
 	
@@ -51,80 +42,102 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Integer> {
 	
 	
 	@Override
-	protected Integer doInBackground(Void... args) {
+	protected Boolean doInBackground(Void... args) {
 		// TODO Auto-generated method stub
 		
-		int exception = 0;
-			
+		boolean newArticle = false;
+		
 		List<Feed> feed = new ArrayList<Feed>(); 
 		feed = baza.readAllRssChannels();
 		
-		for (Feed f: feed){
-		
+		// Parser ROME
+		for (Feed f: feed){			
 			Log.i(LOG_TAG,"Updating feed: "+f.getRssLink());
-		
-			try {
-				URL xmlUrl = new URL(f.getRssLink());
-    
-				SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-				SAXParser parser = saxFactory.newSAXParser();
-				XMLReader reader = parser.getXMLReader();
-				//SAX Parser constructor for update DB (reading only articles)
-				feedRssSaxParser = new FeedRssSaxParser(baza.getLatestArticleDateByID(f.get_id()));
-				reader.setContentHandler(feedRssSaxParser);
-		
-				InputSource inputSource = new InputSource(xmlUrl.openStream());
-				reader.parse(inputSource);	
-
-			} catch (MalformedURLException mue) {	
-				Log.e(LOG_TAG,"newChannelSaxParser - MalformedURLException");
-				mue.printStackTrace();
-				exception = 1;
-			}catch(ParserConfigurationException pce){
-				Log.e(LOG_TAG,"ParserConfigurationException"+pce);
-				exception = 2;
-			}catch(SAXException se){
-				Log.e(LOG_TAG,"SAXException"+se);
-				exception = 3;
-			}catch(IOException e){
-				Log.e(LOG_TAG,"IOException"+e);
-				exception = 4;
+	
+			feedRomeParser = new FeedRomeParser();
+			if (feedRomeParser.getNewArticles(f.getRssLink(), baza.getLatestArticleDateByID(f.get_id())))
+			{
+				//Adding new Articles to Database			
+				List<Article> articles = new ArrayList<Article>();
+				articles = feedRomeParser.getArticles();
+				//Adding RSS channel articles by channel ID
+				for (Article a: articles){
+					baza.addArticleByID(a, f.get_id());
+				}
+				newArticle = true;
+				Log.i(LOG_TAG,"Added new Articles");
+				
 			}
-			
-			
-			/*Adding new Articles to Database*/
-			List<Article> articles = new ArrayList<Article>();	
-			articles = feedRssSaxParser.getArticles();
-			//Adding RSS channel articles by channel ID
-			for (Article a: articles){
-				baza.addArticleByID(a, f.get_id());
-			}		
-			
+		}	
 		
-		}
-		return exception;
+		return newArticle;
+		
+//		Parser SAX
+// 		int exception = 0;  //task zwraca¸Êtyp wyjˆtku
+//		
+//		for (Feed f: feed){
+//		
+//			Log.i(LOG_TAG,"Updating feed: "+f.getRssLink());
+//		
+//			try {
+//				URL xmlUrl = new URL(f.getRssLink());
+//    
+//				SAXParserFactory saxFactory = SAXParserFactory.newInstance();
+//				SAXParser parser = saxFactory.newSAXParser();
+//				XMLReader reader = parser.getXMLReader();
+//				//SAX Parser constructor for update DB (reading only articles)
+//				feedRssSaxParser = new FeedRssSaxParser(baza.getLatestArticleDateByID(f.get_id()));
+//				reader.setContentHandler(feedRssSaxParser);
+//		
+//				InputSource inputSource = new InputSource(xmlUrl.openStream());
+//				reader.parse(inputSource);	
+//
+//			} catch (MalformedURLException mue) {	
+//				Log.e(LOG_TAG,"newChannelSaxParser - MalformedURLException");
+//				mue.printStackTrace();
+//				exception = 1;
+//			}catch(ParserConfigurationException pce){
+//				Log.e(LOG_TAG,"ParserConfigurationException"+pce);
+//				exception = 2;
+//			}catch(SAXException se){
+//				Log.e(LOG_TAG,"SAXException"+se);
+//				exception = 3;
+//			}catch(IOException e){
+//				Log.e(LOG_TAG,"IOException"+e);
+//				exception = 4;
+//			}
+//			
+//			
+//			//Adding new Articles to Database
+//			List<Article> articles = new ArrayList<Article>();	
+//			articles = feedRssSaxParser.getArticles();
+//			//Adding RSS channel articles by channel ID
+//			for (Article a: articles){
+//				baza.addArticleByID(a, f.get_id());
+//			}		
+//			
+//		
+//		}	
+//		return exception;
+	
+	
 	}
 
 	@Override
-	protected void onPostExecute(Integer exception) {
+	protected void onPostExecute(Boolean result) {
 		// TODO Auto-generated method stub
-		super.onPostExecute(exception);
+		super.onPostExecute(result);
 		
 		Log.i(LOG_TAG,"KONIEC WATKU");
 		
 		pDialog.dismiss();
 		
 		/*if no exception*/
-		if (exception == 0){
+		if (result)
 			Toast.makeText(context, "Aticles Updated", Toast.LENGTH_SHORT).show();
-		}
 		else
-			switch(exception){
-			case 4:
-				Toast.makeText(context, "Unable to resolve hosts", Toast.LENGTH_SHORT).show();
-				break;
-			}
+			Toast.makeText(context, "No New Articles", Toast.LENGTH_SHORT).show();
+		}
 		
 	
-	}
 }

@@ -58,7 +58,7 @@ public class ArticleFragment extends Fragment{ //1
 		articleDesc = bundle.getString("ARTICLE_DESC", "default description");
 			
 		textView1.setText(feedLink);
-		textView2.setText(articleTitle);
+		textView2.setText(Html.fromHtml(articleTitle));
 		
 		//textView3.setText(Html.fromHtml(articleDesc)); //fromHtml - that converts HTML into a Spannable for use with a TextView		
 		URLImageParser p = new URLImageParser(textView3);

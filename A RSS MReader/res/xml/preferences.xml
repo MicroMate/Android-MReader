@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/pref_update" >
+       <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefUpdateEnable"
+            android:title="@string/pref_update_enabled" 
+            android:summary="@string/pref_update_enabled_summary">
+       </CheckBoxPreference> 
+       <ListPreference
+            android:key="prefIntervalSecond"
+            android:entries="@array/syncFrequency"
+            android:title="@string/pref_update_interval" 
+            android:summary="@string/pref_update_interval_summary" 
+            android:entryValues="@array/syncFrequencyValues" />  
+    </PreferenceCategory>
+      
     <PreferenceCategory android:title="@string/pref_noti" >
         <CheckBoxPreference
             android:defaultValue="false"
@@ -9,24 +25,6 @@
             android:summary="@string/pref_noti_enabled_summary" >
         </CheckBoxPreference>
         
-        <ListPreference
-            android:key="prefIntervalSecond"
-            android:entries="@array/syncFrequency"
-            android:title="@string/pref_noti_interval" 
-            android:summary="@string/pref_noti_interval_summary" 
-            android:entryValues="@array/syncFrequencyValues" />
-        
   	</PreferenceCategory>   
-  	
-       <!--  
-    <PreferenceCategory android:title="@string/pref_update" >
-       <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="prefSendReport"
-            android:title="@string/pref_update_enabled" 
-            android:summary="@string/pref_update_enabled_summary">
-         </CheckBoxPreference> 
-    </PreferenceCategory>
-    -->
-    
+  	   
 </PreferenceScreen>

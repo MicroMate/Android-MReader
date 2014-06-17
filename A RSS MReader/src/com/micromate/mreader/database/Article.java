@@ -132,9 +132,31 @@ public class Article {
 		return strDate;
 	}
 	
+	//
+	public void setPublishedDate(Date inputDate) {
+		//wzor daty z pliku xml
+		//SimpleDateFormat formatter = new SimpleDateFormat("E MMM dd hh:mm:ss Z yyyy",Locale.UK);
+		//moj wzor daty
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.UK);
+		
+		//Date date = null;
+	    String strDate = "0000-00-00 00:00:00";
+		try {
+			//date = formatter.parse(pubDate);
+			strDate =  dateFormat.format(inputDate);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.w("ArticleDateParser",
+				    "Wystˆpi¸ problem z konwersjˆ pubDate: " + e.toString());
+		}	  
+		
+		this.date = strDate;
+	}
+	
+	
 	/*
-	//Konwertowanie daty do typu Date
-	public Date getDateDate() {
+	public Date getPublishedDate() {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.UK);
 		Date date = null;
@@ -150,6 +172,5 @@ public class Article {
 		
 		return date;
 	}
-	*/
-
+*/
 }

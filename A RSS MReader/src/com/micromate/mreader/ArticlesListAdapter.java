@@ -6,6 +6,7 @@ import java.util.List;
 import com.micromate.mreader.database.Article;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class ArticlesListAdapter extends ArrayAdapter<Article>{
 	    TextView valueView = (TextView) rowView.findViewById(R.id.date);
 
 	    // 4. Set the text for textView 
-	    labelView.setText(articles.get(position).getTitle());
+	    labelView.setText(Html.fromHtml(articles.get(position).getTitle()));
 	    valueView.setText(articles.get(position).getListDate());
 
 	    // 5. retrn rowView
