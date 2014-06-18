@@ -20,6 +20,7 @@ public class SettingFragment extends PreferenceFragment {
          
          //Inflates the given XML resource
          addPreferencesFromResource(R.xml.preferences); 
+
 	 }
 	 
 	@Override
@@ -55,8 +56,5 @@ public class SettingFragment extends PreferenceFragment {
 		 else {
 				serviceAlarmMenager.stop();
 		 } 
-	 }
-	 
-	 
-	 
+	 } 
 }

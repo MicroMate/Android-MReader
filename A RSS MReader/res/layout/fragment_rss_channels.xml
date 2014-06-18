@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#004444">
+    android:layout_height="match_parent">
     
     
    	<ListView
@@ -11,7 +10,6 @@
         android:layout_height="wrap_content"
         android:divider="#004848"
         android:dividerHeight="1dp"
-        android:background="#005555"
         android:cacheColorHint="#000000"/>
  
 </RelativeLayout>
