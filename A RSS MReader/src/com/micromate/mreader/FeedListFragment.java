@@ -41,6 +41,9 @@ public class FeedListFragment extends Fragment {
 		
 		listView = (ListView)rootView.findViewById(R.id.channels_list);
 		
+		//setting title in ActionBar
+		getActivity().getActionBar().setTitle("Feeds");
+			
 		rssChannels = new ArrayList<Feed>();
 		
 		/*Getting all RSS channels from Data Base*/
@@ -59,8 +62,8 @@ public class FeedListFragment extends Fragment {
 				Fragment fragment = new ArticlesListFragment();
 				/**/
 				Bundle bundle = new Bundle();
-				bundle.putInt("CHANNEL_ID", rssChannels.get(pos).get_id());
-				bundle.putString("FEED_LINK", rssChannels.get(pos).getLink());	
+				bundle.putInt("FEED_ID", rssChannels.get(pos).get_id()); //for ArticlesListFragment
+				bundle.putString("FEED_TITLE", rssChannels.get(pos).getTitle()); //for ArticleFragment
 				fragment.setArguments(bundle);
 				
 				FragmentManager fragmentManager = getFragmentManager();

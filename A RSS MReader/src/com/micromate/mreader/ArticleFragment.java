@@ -14,6 +14,7 @@ import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,20 +22,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ArticleFragment extends Fragment{ //1
 
 	private TextView textView1;
-	private TextView textView2;
-	private TextView textView3;
 	private ScrollView scrollView;
 	private Button button;
-	private String feedLink;
+	private String feedTitle;
 	private String articleTitle;
 	private String articleDesc;
 	private String articleURL;
 	private Bundle bundle;
 	private View rootView;
+	private static final String LOG_TAG ="ArticleFragment";
 	
 	public ArticleFragment(){}
 	
@@ -46,26 +47,29 @@ public class ArticleFragment extends Fragment{ //1
 		// Inflate the layout for this fragment
 		rootView = inflater.inflate(R.layout.fragment_article, container, false); //4
 		
-		textView1 = (TextView)rootView.findViewById(R.id.article_rss_titleView1);
-		textView2 = (TextView)rootView.findViewById(R.id.article_titleView2);
-		textView3 = (TextView)rootView.findViewById(R.id.article_descriptionView3);
+		textView1 = (TextView)rootView.findViewById(R.id.article_descriptionView3);
 		scrollView = (ScrollView)rootView.findViewById(R.id.scrollView1);
 		button = (Button)rootView.findViewById(R.id.article_button);
 			
 		bundle = this.getArguments();
-		feedLink = bundle.getString("FEED_LINK", "default link");
+		feedTitle = bundle.getString("FEED_TITLE", "title");
 		articleTitle = bundle.getString("ARTICLE_TITLE", "default title");
-		articleDesc = bundle.getString("ARTICLE_DESC", "default description");
+		articleDesc = bundle.getString("ARTICLE_DESC", "default description");		
+		
+		//setting title in ActionBar
+		getActivity().getActionBar().setTitle(feedTitle);
+		getActivity().setTitle(feedTitle); //to remember after close naviDrawer 
+		
+		//
+		String titleMyFormat = "<h3><font color=#cccccc>"+articleTitle+"</font></h3>";
+		
 			
-		textView1.setText(feedLink);
-		textView2.setText(Html.fromHtml(articleTitle));
-		
 		//textView3.setText(Html.fromHtml(articleDesc)); //fromHtml - that converts HTML into a Spannable for use with a TextView		
-		URLImageParser p = new URLImageParser(textView3);
-		Spanned htmlSpan = Html.fromHtml(articleDesc, p, null);
-		textView3.setText(htmlSpan);
+		URLImageParser p = new URLImageParser(textView1);
+		Spanned htmlSpan = Html.fromHtml(titleMyFormat + articleDesc, p, null);
+		textView1.setText(htmlSpan);
 		
-		textView3.setMovementMethod(LinkMovementMethod.getInstance()); //enable links
+		textView1.setMovementMethod(LinkMovementMethod.getInstance()); //enable links
 				
 		scrollView.post(new Runnable()
 	    { 
@@ -78,20 +82,28 @@ public class ArticleFragment extends Fragment{ //1
 		
 		articleURL = bundle.getString("ARTICLE_LINK", "default link");
 		
+		
 		button.setOnClickListener(new OnClickListener() {
 		    @Override
 		    public void onClick(View arg0) {
-		        Intent buttonIntent = new Intent(Intent.ACTION_VIEW, 
-		                Uri.parse(articleURL));
-		        startActivity(buttonIntent);
+		    	Log.d(LOG_TAG,"Article link: "+articleURL);
+		    	try{
+		    		Intent buttonIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(articleURL));
+		        	startActivity(buttonIntent);
+		        }catch(Exception e){
+		        	Toast.makeText(getActivity(), "No Link", Toast.LENGTH_SHORT).show();
+		        }
 		    }
 		});
-		
-		
+	
 		return rootView;  //5
 	}
 		
+	
 	private class URLDrawable extends BitmapDrawable {
+		public URLDrawable(){      // BitmapDrawable() constructor was deprecated in API level 4. 
+			super(getActivity().getResources());   //instead constructor: BitmapDrawable(Resource res);
+		}
 	    // the drawable that you need to set, you could set the initial drawing
 	    // with the loading image if you need to
 	    protected Drawable drawable;

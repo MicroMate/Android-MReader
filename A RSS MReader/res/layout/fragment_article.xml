@@ -2,31 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#111111"
+    android:background="#004444"
     android:orientation="vertical" >
-
-     <TextView
-         android:id="@+id/article_rss_titleView1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="10dp"
-         android:text="@string/feed_title"
-         android:textAppearance="?android:attr/textAppearanceMedium"
-         android:textColor="#b8b8b8"
-         android:textSize="15sp" />
-
-     <TextView
-         android:id="@+id/article_titleView2"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/article_rss_titleView1"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="8dp"
-         android:text="@string/article_title"
-         android:textColor="#cccccc"
-         android:textSize="16sp" />
 
      <ScrollView
          android:id="@+id/scrollView1"
@@ -35,9 +12,8 @@
          android:layout_above="@+id/article_button"
          android:layout_alignParentLeft="true"
          android:layout_alignParentRight="true"
-         android:layout_below="@+id/article_titleView2"
-         android:background="#222222"
-         android:layout_marginTop="10dp" >
+         android:layout_alignParentTop="true"
+         android:background="#003333" >
 
          <TextView
              android:id="@+id/article_descriptionView3"

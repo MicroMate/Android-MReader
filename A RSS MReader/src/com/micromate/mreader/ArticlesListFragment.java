@@ -25,6 +25,7 @@ public class ArticlesListFragment extends Fragment {
 	private DBoperacje baza;
 	private int rssChannelID;
 	private Bundle bundle;
+	private String feedTitle;
 	
 	
 	public ArticlesListFragment(){}
@@ -39,8 +40,14 @@ public class ArticlesListFragment extends Fragment {
 		articles = new ArrayList<Article>();
 		baza = new DBoperacje(getActivity());         
 	
+		
 		bundle = this.getArguments();
-		rssChannelID = bundle.getInt("CHANNEL_ID", 0);
+		rssChannelID = bundle.getInt("FEED_ID", 0);
+		feedTitle = bundle.getString("FEED_TITLE", "Title");
+			
+		//setting title in ActionBar
+		getActivity().getActionBar().setTitle(feedTitle);
+		getActivity().setTitle(feedTitle); //to remember after close naviDrawer 
 		
     	/*getting all RSS channels from Data Base*/
 		articles = baza.getAllArticlesByID(rssChannelID);		  
