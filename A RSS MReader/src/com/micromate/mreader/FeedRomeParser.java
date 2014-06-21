@@ -132,8 +132,11 @@ public class FeedRomeParser {
 				
 				SyndEntry ent = iterator.next();
 				
-				if (parseToDate(latestArticleDate).compareTo(ent.getPublishedDate()) >= 0){
-					Log.i(LOG_TAG, "No new article, latest published article: "+ent.getPublishedDate());
+			    Log.i(LOG_TAG, "Article latest date: "+latestArticleDate);
+			      
+				if (latestArticleDate.compareTo(parseToString(ent.getPublishedDate()))>=0){
+				//if (latestDate.compareTo(ent.getPublishedDate()) >= 0){
+					Log.i(LOG_TAG, "No new article, latest published article: "+parseToString(ent.getPublishedDate()));
 					break;
 				}
 				
@@ -165,19 +168,36 @@ public class FeedRomeParser {
 	
 	
 	//Parse a date from string to date format 
-	private Date parseToDate(String inputDate) {
+//	private Date parseToDate(String inputDate) {
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.UK);
+//		Date date = null;
+//	    
+//		try {
+//			date = formatter.parse(inputDate);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			Log.w(LOG_TAG, "Problem with date parse from string to date format ");
+//		}	  		
+//		return date;
+//	}
+	
+	//Parse a date from date to string format 
+	public String parseToString(Date inputDate) {
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.UK);
-		Date date = null;
-	    
-		try {
-			date = formatter.parse(inputDate);
+		//my date format
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.UK);		
+	    String strDate = "0000-00-00 00:00:00";
+		
+	    try {
+			strDate =  dateFormat.format(inputDate);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.w(LOG_TAG, "Problem with date parse from string to date format ");
+			Log.w(LOG_TAG,"Problem with date parse from date to string format");
 		}	  		
-		return date;
+		
+	    return strDate;
 	}
 	
 }

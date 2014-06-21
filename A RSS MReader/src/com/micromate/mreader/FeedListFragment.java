@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
 
@@ -48,7 +49,9 @@ public class FeedListFragment extends Fragment {
 		
 		/*Getting all RSS channels from Data Base*/
 		baza = new DBoperacje(getActivity()); 
-		rssChannels = baza.readAllRssChannels(); //getting all Feeds	    
+		rssChannels = baza.readAllRssChannels(); //getting all Feeds
+		//
+		getArticlesUnreadQty();
 	    feedListAdapter = new FeedListAdapter(getActivity(), R.layout.fragment_rss_channels, rssChannels);
 	    listView.setAdapter(feedListAdapter);
 
@@ -116,6 +119,22 @@ public class FeedListFragment extends Fragment {
 		
 		return rootView;
 		
+	}
+	
+	private void getArticlesUnreadQty(){
+		int unreadQty = 0;
+		List<Article> articles;
+		
+		for (Feed c: rssChannels){
+			unreadQty = 0;
+			articles = new ArrayList<Article>();
+			articles = baza.getAllArticlesByID(c.get_id());
+			for(Article a: articles){
+				if (a.getUnread()==0)  //0 = unread an article 
+					unreadQty++;
+			}
+			c.setUnreadQuantity(unreadQty);
+		}
 	}
 	
 }

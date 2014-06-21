@@ -3,15 +3,21 @@ package com.micromate.mreader;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 import com.micromate.mreader.database.Article;
@@ -62,6 +68,7 @@ public class ArticlesListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int pos, long id) {
 			
+				baza.setArticleRead(articles.get(pos).getUrl());
 				
 				Fragment fragment = new ArticleFragment();
 				/**/
@@ -78,6 +85,48 @@ public class ArticlesListFragment extends Fragment {
 				transaction.commit();					
 			}
 		});
+		
+		//on long click open dialog and delete article
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long arg3) {
+				// TODO Auto-generated method stub
+					
+				Vibrator vibrator;
+				vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+				vibrator.vibrate(100);
+				
+				//AlertDialog builder instance
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			    builder
+			    	.setTitle(articles.get(pos).getTitle())
+			    	.setItems(R.array.feedlist_option_array, new DialogInterface.OnClickListener() {
+			    	public void onClick(DialogInterface dialog, int which) {
+			    		// The 'which' argument contains the index position of the selected item
+			    		
+			    		baza.deleteArticle(articles.get(pos).getUrl());
+			    		
+			    		Toast.makeText(getActivity(), "Article deleted", Toast.LENGTH_SHORT).show();
+			    		
+			    		/*updating list view*/
+			    		articles.clear();
+			    		articles.addAll(baza.getAllArticlesByID(rssChannelID));	
+			    		articlesListAdapter.notifyDataSetChanged();
+			            	   
+			    	}
+			    });
+			    //Create the AlertDialog
+			    AlertDialog dialog = builder.create();
+			    //Show the AlertDialog
+			    dialog.show();
+				
+				return false;
+			}
+			
+		});
+		
+		
 	        
 	    
 	    return rootView;

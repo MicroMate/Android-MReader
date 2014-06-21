@@ -7,9 +7,17 @@
     <color name="counter_text_bg">#626262</color>
     <color name="counter_text_color">#c5c4c4</color>
     
-  	<color name="app_background">#005555</color>
+  	<color name="app_background">#006060</color>
   	
  	<color name="action_bar_color">#333333</color>
    	<color name="action_bar_line_color">#555555</color>
-   
+
+   	<color name="feed_list_title">#DDDDDD</color>
+   	<color name="feed_list_link">#001111</color>
+   		
+   	<color name="article_list_unread">#EEEEEE</color>
+   	<color name="article_list_read">#D1D1D1</color>
+   	<color name="article_list_read_bg">#005252</color>
+   	<color name="article_list_date">#001111</color>
+   	
 </resources>

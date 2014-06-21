@@ -33,7 +33,7 @@ public class ArticlesListAdapter extends ArrayAdapter<Article>{
 	    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 	    // 2. Get rowView from inflater
-	    View rowView = inflater.inflate(R.layout.articles_list_row, parent, false);
+	    View rowView = inflater.inflate(R.layout.articles_list_row, parent, false);  
 
 	    // 3. Get the two text view from the rowView
 	    TextView labelView = (TextView) rowView.findViewById(R.id.title);
@@ -42,7 +42,13 @@ public class ArticlesListAdapter extends ArrayAdapter<Article>{
 	    // 4. Set the text for textView 
 	    labelView.setText(Html.fromHtml(articles.get(position).getTitle()));
 	    valueView.setText(articles.get(position).getListDate());
-
+	    
+	    //if article was read change title and background colors
+	    if(articles.get(position).getUnread() == 1){
+	    	labelView.setTextColor(context.getResources().getColor(R.color.article_list_read));
+	    	rowView.setBackgroundColor(context.getResources().getColor(R.color.article_list_read_bg));
+	    }	
+	    	
 	    // 5. retrn rowView
 	    return rowView;
 	}

@@ -6,6 +6,7 @@ public class Feed {
 	private String link;
 	private String rssLink;
 	private String description;
+	private int unreadQuantity;
 	
 	
 	public Feed(){}
@@ -46,6 +47,14 @@ public class Feed {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getUnreadQuantity() {
+		return unreadQuantity;
+	}
+
+	public void setUnreadQuantity(int unreadQuantity) {
+		this.unreadQuantity = unreadQuantity;
 	}
 	
 	

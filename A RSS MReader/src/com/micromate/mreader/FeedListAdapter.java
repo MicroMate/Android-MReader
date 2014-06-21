@@ -37,10 +37,12 @@ public class FeedListAdapter extends ArrayAdapter<Feed>{
 	    // 3. Get the two text view from the rowView
 	    TextView titleView = (TextView) rowView.findViewById(R.id.channel_title);
 	    TextView linkView = (TextView) rowView.findViewById(R.id.channel_link);
+	    TextView unreadQtyView = (TextView) rowView.findViewById(R.id.channel_unreadQty);
 
 	    // 4. Set the text for textView 
 	    titleView.setText(rssChannel.get(position).getTitle());
 	    linkView.setText(rssChannel.get(position).getLink());
+	    unreadQtyView.setText(String.valueOf(rssChannel.get(position).getUnreadQuantity()));
 
 	    // 5. retrn rowView
 	    return rowView;

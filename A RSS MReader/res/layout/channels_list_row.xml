@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:padding="5dip" >
 
-    <TextView
-        android:id="@+id/channel_title"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:paddingBottom="4dip"
-        android:paddingLeft="8dip"
-        android:paddingTop="8dip"
-        android:text="@string/feed_title"
-        android:textColor="#cccccc"
-        android:textSize="18sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/channel_unreadQty"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/channel_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dip"
+            android:paddingLeft="8dip"
+            android:paddingTop="8dip"
+            android:text="@string/feed_title"
+            android:textColor="@color/feed_list_title"
+            android:textSize="18sp"
+            android:lines="1" />
+
+        <TextView
+            android:id="@+id/channel_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+       	    android:paddingBottom="6dip"
+            android:paddingLeft="8dip"
+            android:text="@string/feed_link"
+            android:textColor="@color/feed_list_link"
+            android:textSize="15sp" 
+            android:lines="1"/>
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/channel_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/channel_title"
+        android:id="@+id/channel_unreadQty"
+        android:layout_width="30dp"
+        android:layout_height="15dp"
+        android:layout_alignBottom="@+id/linearLayout1"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/channel_title"
-        android:paddingBottom="6dip"
-        android:paddingLeft="8dip"
-        android:text="@string/feed_link"
-        android:textColor="#001111"
-        android:textSize="15sp" />
-    
-     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/arrow"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" />
+        android:layout_alignTop="@+id/linearLayout1"
+        android:layout_margin="10dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/feed_list_unread_bg"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/counter_text_color" />
 
 </RelativeLayout>

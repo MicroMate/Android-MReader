@@ -157,8 +157,8 @@ public class FeedRssSaxParser extends DefaultHandler {
 				}
 				
 			}
-			else if(localName.equals("category"))
-				article.setCategory(builderText.toString());
+			//else if(localName.equals("category"))
+			//	article.setCategory(builderText.toString());
 		
 			else if(localName.equalsIgnoreCase("encoded"))
 				article.setDescription(builderText.toString().trim());

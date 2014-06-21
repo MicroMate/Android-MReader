@@ -13,19 +13,18 @@ public class Article {
 	private long channel_id;
 	private String title ="title";
 	private String description ="title";
-	//private URL url;
 	private String url;
 	private String date;
-	private String category;
+	private Integer unread = 0;  //SQLite does not have a Boolean type.   0 = unread, 1 = read article 
+	private Integer dontDelete = 0; //	0 = don't delete article, 1 = article can be deleted
 	
-	public Article(String title, String description, String url, String date, String category) {
-		this.title = title;
-		this.description = description;
-		this.url = url;
-		this.date = date;
-		this.category = category;
-	}
-	
+//	public Article(String title, String description, String url, String date) {
+//		this.title = title;
+//		this.description = description;
+//		this.url = url;
+//		this.date = date;
+//	}
+
 	public Article() {
 		// TODO Auto-generated constructor stub
 	}
@@ -79,6 +78,23 @@ public class Article {
 		this.date = date;
 	}
 
+	public Integer getUnread() {
+		return unread;
+	}
+
+	public void setUnread(Integer unread) {
+		this.unread = unread;
+	}
+	
+	public Integer getDontDelete() {
+		return dontDelete;
+	}
+
+	public void setDontDelete(Integer dontDelete) {
+		this.dontDelete = dontDelete;
+	}
+	
+
 	public void setPubDate(String pubDate) {
 		//wzor daty z pliku xml
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss ZZZZZ",Locale.UK);
@@ -100,15 +116,7 @@ public class Article {
 		this.date = strDate;
 	}
 	
-	public String getCategory() {
-		return category;
-	}
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	
 	//W¸asny Format Daty i Godziny, dla wyswietlania na liscie
 	public String getListDate() {
 		//wzor daty z pliku xml

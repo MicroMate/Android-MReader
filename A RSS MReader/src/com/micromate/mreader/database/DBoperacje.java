@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 public class DBoperacje {
 	
@@ -39,15 +38,16 @@ public class DBoperacje {
     	db = dbOpenHelper.getWritableDatabase();
     	
         ContentValues values = new ContentValues();
-        values.put(DBopenHelper.NAZWA_KOLUMNY_WEBSITE_ID, channel_id);      
-        values.put(DBopenHelper.NAZWA_KOLUMNY_TITLE, article.getTitle());
-        values.put(DBopenHelper.NAZWA_KOLUMNY_DESCRIPTION, article.getDescription()); 
-        values.put(DBopenHelper.NAZWA_KOLUMNY_URL, article.getUrl()); 
-        values.put(DBopenHelper.NAZWA_KOLUMNY_PUBDATE, article.getDate()); 
-        values.put(DBopenHelper.NAZWA_KOLUMNY_CATEGORY, article.getCategory()); 
-        
+        values.put(DBopenHelper.ARTICLE_COLUMN_WEBSITE_ID, channel_id);      
+        values.put(DBopenHelper.ARTICLE_COLUMN_TITLE, article.getTitle());
+        values.put(DBopenHelper.ARTICLE_COLUMN_DESCRIPTION, article.getDescription()); 
+        values.put(DBopenHelper.ARTICLE_COLUMN_URL, article.getUrl()); 
+        values.put(DBopenHelper.ARTICLE_COLUMN_PUBDATE, article.getDate()); 
+        values.put(DBopenHelper.ARTICLE_COLUMN_UNREAD, article.getUnread()); 
+        values.put(DBopenHelper.ARTICLE_COLUMN_DONT_DELETE, article.getDontDelete()); 
+              
         // Inserting Row
-        db.insert(DBopenHelper.NAZWA_TABELI, null, values);
+        db.insert(DBopenHelper.TABLE_ARTICLE, null, values);
         db.close(); // Closing database connection
     }
     
@@ -60,8 +60,8 @@ public class DBoperacje {
     	List<Article> lista = new ArrayList<Article>();
              
         // Select All Query      
-        String selectQuery = "SELECT  * FROM " + DBopenHelper.NAZWA_TABELI;
-        Cursor kursor = db.rawQuery(selectQuery, null);
+        String selectQuery = "SELECT  * FROM " + DBopenHelper.TABLE_ARTICLE;
+        Cursor cursor = db.rawQuery(selectQuery, null);
         
         //Drugi sposob pobierania danych z bazy
         //segregowanie wedlug kolumny CZAS (najkrotszy bedzie pierwszy)
@@ -70,28 +70,29 @@ public class DBoperacje {
         //int licznik = 1; // dla numeru pozycji na liscie
         		
         // looping through all rows and adding to list
-        if (kursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 Article article = new Article();
                 
-                article.setId(Integer.parseInt(kursor.getString(0)));
-                article.setChannel_id(Integer.parseInt(kursor.getString(1)));
-                article.setTitle(kursor.getString(2));
-                article.setDescription(kursor.getString(3));
-                article.setUrl(kursor.getString(4));
-                article.setDate(kursor.getString(5));
-                article.setCategory(kursor.getString(6));
-                
+                article.setId(Integer.parseInt(cursor.getString(0)));
+                article.setChannel_id(Integer.parseInt(cursor.getString(1)));
+                article.setTitle(cursor.getString(2));
+                article.setDescription(cursor.getString(3));
+                article.setUrl(cursor.getString(4));
+                article.setDate(cursor.getString(5));
+                article.setUnread(cursor.getInt(6));
+                article.setDontDelete(cursor.getInt(7));
+                  
                 //licznik (nr pozycji na liscie - mozna dodac do ziarna)
                 //wynik.setNr(licznik++);
                 
                 // Adding item to list
                 lista.add(article);
                 
-            } while (kursor.moveToNext());
+            } while (cursor.moveToNext());
         }
  
-        kursor.close();
+        cursor.close();
         // return item list
         db.close(); // Closing database connection
         return lista;
@@ -105,27 +106,28 @@ public class DBoperacje {
     	List<Article> lista = new ArrayList<Article>();
              
         // Select All Query      
-        String selectQuery = "SELECT  * FROM " + DBopenHelper.NAZWA_TABELI +" " +
+        String selectQuery = "SELECT  * FROM " + DBopenHelper.TABLE_ARTICLE +" " +
         					 "WHERE website_id = '"+channel_id+"' " +
-        					 "ORDER BY "+DBopenHelper.NAZWA_KOLUMNY_PUBDATE + " DESC";
+        					 "ORDER BY "+DBopenHelper.ARTICLE_COLUMN_PUBDATE + " DESC";
         
         Cursor cursor = db.rawQuery(selectQuery, null);
         		
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Article wynik = new Article();
+                Article article = new Article();
                 
-                wynik.setId(Integer.parseInt(cursor.getString(0)));
-                wynik.setChannel_id(Integer.parseInt(cursor.getString(1)));
-                wynik.setTitle(cursor.getString(2));
-                wynik.setDescription(cursor.getString(3));
-                wynik.setUrl(cursor.getString(4));
-                wynik.setDate(cursor.getString(5));
-                wynik.setCategory(cursor.getString(6));
-                               
+                article.setId(cursor.getInt(0));
+                article.setChannel_id(cursor.getInt(1));
+                article.setTitle(cursor.getString(2));
+                article.setDescription(cursor.getString(3));
+                article.setUrl(cursor.getString(4));
+                article.setDate(cursor.getString(5));
+                article.setUnread(cursor.getInt(6));
+                article.setDontDelete(cursor.getInt(7));
+                                    
                 // Adding contact to list
-                lista.add(wynik);
+                lista.add(article);
                 
             } while (cursor.moveToNext());
         }
@@ -141,24 +143,20 @@ public class DBoperacje {
     	   
     	String latestDate = "0000-00-00 00:00:00";
         // Select All Query      
-        String selectQuery = "SELECT pubDate FROM " + DBopenHelper.NAZWA_TABELI+" "+
+        String selectQuery = "SELECT pubDate FROM " + DBopenHelper.TABLE_ARTICLE+" "+
         					 "ORDER BY pubDate DESC LIMIT 1";
         
-        Cursor kursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 		
         // looping through all rows and adding to list
-        if (kursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
            	             
-            latestDate = kursor.getString(0);
+            latestDate = cursor.getString(0);
                 
         }
- 
-        kursor.close();
+        cursor.close();
         db.close(); // Closing database connection
-        // return contact list
-        Log.i("DBoperacje", "Article latest date: "+latestDate);
         return latestDate;
-         
     }
     
     // Getting Latest date of article WHERE channel_id
@@ -167,24 +165,20 @@ public class DBoperacje {
     	   
     	String latestDate = "0000-00-00 00:00:00";
         // Select All Query      
-        String selectQuery = "SELECT pubDate FROM " + DBopenHelper.NAZWA_TABELI+" " +
+        String selectQuery = "SELECT pubDate FROM " + DBopenHelper.TABLE_ARTICLE+" " +
         					 "WHERE website_id = '"+channel_id+"' " +
         		             "ORDER BY pubDate DESC LIMIT 1";
-        Cursor kursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 		
         // looping through all rows and adding to list
-        if (kursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
            	             
-            latestDate = kursor.getString(0);
+            latestDate = cursor.getString(0);
                 
         }
- 
-        kursor.close();
+        cursor.close();
         db.close(); // Closing database connection
-        // return contact list
-        Log.i("DBoperacje", "Article latest date: "+latestDate);
-        return latestDate;
-         
+        return latestDate;       
     }
     
     
@@ -192,23 +186,32 @@ public class DBoperacje {
     	db = dbOpenHelper.getWritableDatabase();
     	//bazaDanych.execSQL("delete * from "+ OpenHelperWynik.NAZWA_TABELI);
         //bazaDanych.delete(OpenHelperWynik.NAZWA_TABELI, "1", null);
-        db.delete(DBopenHelper.NAZWA_TABELI, null, null);
+        db.delete(DBopenHelper.TABLE_ARTICLE, null, null);
         
         db.close(); // Closing database connection
          
     }
     
     
-    //delete Articles WHERE channel id 
-    public boolean deleteArticles(long _index) {
+    //delete Articles WHERE channel id (for deleting all articles of specify feed) 
+    public boolean deleteArticles(long feed_id) {
     	db = dbOpenHelper.getWritableDatabase();
-        String where = "website_id =" + _index;
-        boolean result = db.delete(DBopenHelper.NAZWA_TABELI, where , null) > 0;
+        String where = "website_id =" + feed_id;
+        boolean result = db.delete(DBopenHelper.TABLE_ARTICLE, where , null) > 0;
+        db.close(); // Closing database connection
+        return result;
+    }
+    
+    //Delete One Article WHERE article url 
+    public boolean deleteArticle(String articleURL) {
+    	db = dbOpenHelper.getWritableDatabase();
+        String where = DBopenHelper.ARTICLE_COLUMN_URL+" = '"+ articleURL +"'";
+        boolean result = db.delete(DBopenHelper.TABLE_ARTICLE, where , null) > 0;
         db.close(); // Closing database connection
         return result;
     }
    
-    
+   
     
     /*
      *  RSS Channel table operation
@@ -277,6 +280,20 @@ public class DBoperacje {
         boolean result = db.delete(DBopenHelper.TABLE_RSS_CHANNEL, where , null) > 0;
         db.close(); // Closing database connection
         return result; 
+    }
+    
+    //mark to read the article 
+    public void setArticleRead(String link){
+    	db = dbOpenHelper.getWritableDatabase();
+//    	ContentValues values = new ContentValues();
+//      values.put(DBopenHelper.ARTICLE_COLUMN_UNREAD, 1); //set 1 = read
+//      String whereClause = DBopenHelper.ARTICLE_COLUMN_URL + " = '"+link+ "'";
+//      db.update(DBopenHelper.TABLE_ARTICLE, values, whereClause, null);  
+    	//drugi spos—b
+        String query = "UPDATE article SET unread = 1 WHERE url = '"+ link +"'";
+        db.execSQL(query);
+        db.close(); // Closing database connection
+          
     }
     
 }

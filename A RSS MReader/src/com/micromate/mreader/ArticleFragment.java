@@ -153,17 +153,22 @@ public class ArticleFragment extends Fragment{ //1
 	        protected Drawable doInBackground(String... inputURL) {
 	            //String source = params[0];
 	            //return fetchDrawable(source);
-	        	Drawable drawable = getResources().getDrawable( R.drawable.ic_action_picture);
+	        	Drawable drawable = null;
+	        
 	        	try {
-	                //InputStream is = fetch(urlString);
+	        		drawable = getResources().getDrawable( R.drawable.ic_action_picture);
+	        	        
+	        		//InputStream is = fetch(urlString);
 	            	URL url = new URL(inputURL[0]);
 	                drawable = Drawable.createFromStream(url.openStream(), "src");
-	               
 	            } catch (Exception e) {
 	            	e.printStackTrace();
 	                
 	            } 
-	        	drawable.setBounds(0, 0, 0 + drawable.getIntrinsicWidth(), 0 + drawable.getIntrinsicHeight()); 
+	        	
+	        	if (drawable !=null)
+	        		drawable.setBounds(0, 0, 0 + drawable.getIntrinsicWidth(), 0 + drawable.getIntrinsicHeight());  
+	        	
 	        	return drawable;
 	        }
 
@@ -171,19 +176,20 @@ public class ArticleFragment extends Fragment{ //1
 	        protected void onPostExecute(Drawable result) {
 	           
 	        	// set the correct bound according to the result from HTTP call	        	
-	 	        urlDrawable.setBounds(0, 0, 0 + result.getIntrinsicWidth(), 0 + result.getIntrinsicHeight()); 
+	 	        if (result != null){
+	 	        	urlDrawable.setBounds(0, 0, 0 + result.getIntrinsicWidth(), 0 + result.getIntrinsicHeight()); 
 
-	            // change the reference of the current drawable to the result
-	            // from the HTTP call
-	            urlDrawable.drawable = result;
+	 	        	// change the reference of the current drawable to the result
+	 	        	// from the HTTP call
+	 	        	urlDrawable.drawable = result;
 	        	
-	            // redraw the image by invalidating the container
-	            textView.invalidate();
+	 	        	// redraw the image by invalidating the container
+	 	        	textView.invalidate();
 	                      
-	            textView.setHeight((textView.getHeight() + result.getIntrinsicHeight()));
+	 	        	textView.setHeight((textView.getHeight() + result.getIntrinsicHeight()));
 
-	            textView.setEllipsize(null);
-	     
+	 	        	textView.setEllipsize(null);
+	 	        }
 	        }
 
 	    }

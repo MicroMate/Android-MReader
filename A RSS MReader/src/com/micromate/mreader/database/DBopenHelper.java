@@ -16,31 +16,32 @@ import android.util.Log;
 // SQLiteOpenHelper - sluzy do konfigurowania baz i otwierania polaczen
 public class DBopenHelper extends SQLiteOpenHelper{
 
-	  //Wersja Bazy Danych                                    
-	  private static final int WERSJA_BAZY = 1;
+	  // Database Version                                  
+	  private static final int DB_VERSION = 2;
 
 	  // Database Name
-	  public static final String NAZWA_BAZY = "rssMReader.db";
+	  public static final String DB_NAME = "rssMReader.db";
 
 	  // Table Names
 	  public static final String TABLE_RSS_CHANNEL = "rssChannel"; 
-	  public static final String NAZWA_TABELI = "article";
+	  public static final String TABLE_ARTICLE = "article";
 	    
-	  // Column names
+	  // Column names of rssChannel table
 	  public static final String COLUMN_ID = "_id";
 	  public static final String COLUMN_TITLE = "title";
 	  public static final String COLUMN_LINK = "link";
 	  public static final String COLUMN_RSS_LINK = "rssLink";
 	  public static final String COLUMN_DESCRIPTION = "decription";
 				
-	  //Nazwa kolumn
-	  public static final String NAZWA_KOLUMNY_ID = "_id";
-	  public static final String NAZWA_KOLUMNY_WEBSITE_ID = "website_id";
-	  public static final String NAZWA_KOLUMNY_TITLE = "title";   
-	  public static final String NAZWA_KOLUMNY_DESCRIPTION = "description";   		 
-	  public static final String NAZWA_KOLUMNY_URL = "url";  
-	  public static final String NAZWA_KOLUMNY_PUBDATE = "pubDate";  
-	  public static final String NAZWA_KOLUMNY_CATEGORY = "category";  
+	  //Column names of article table
+	  public static final String ARTICLE_COLUMN_ID = "_id";
+	  public static final String ARTICLE_COLUMN_WEBSITE_ID = "website_id";
+	  public static final String ARTICLE_COLUMN_TITLE = "title";   
+	  public static final String ARTICLE_COLUMN_DESCRIPTION = "description";   		 
+	  public static final String ARTICLE_COLUMN_URL = "url";  
+	  public static final String ARTICLE_COLUMN_PUBDATE = "pubDate";  
+	  public static final String ARTICLE_COLUMN_UNREAD = "unread";  
+	  public static final String ARTICLE_COLUMN_DONT_DELETE = "dontDelete"; //don't delete article 
 	  
 	  private static final String CREATE_RSS_TABLE = 
 			  "CREATE TABLE " + TABLE_RSS_CHANNEL + "(" + 
@@ -51,22 +52,23 @@ public class DBopenHelper extends SQLiteOpenHelper{
 			  COLUMN_DESCRIPTION + " TEXT" + ")";
 	  
 
-	  // Database creation sql statement
+	  // Database creation SQL statement
 	  private static final String UTWORZ_TABLICE = 
-		  "create table " + NAZWA_TABELI + "(" + 
-	      NAZWA_KOLUMNY_ID + " integer primary key autoincrement, " + 
-	      NAZWA_KOLUMNY_WEBSITE_ID + " integer, " + 		
-	      NAZWA_KOLUMNY_TITLE + " text," +
-	      NAZWA_KOLUMNY_DESCRIPTION + " text," +
-	      NAZWA_KOLUMNY_URL + " text," + 
-	      NAZWA_KOLUMNY_PUBDATE + " text," +
-	      NAZWA_KOLUMNY_CATEGORY + " text," +
-	      " FOREIGN KEY ("+NAZWA_KOLUMNY_WEBSITE_ID+") REFERENCES "+TABLE_RSS_CHANNEL+"("+COLUMN_ID+"));";
+		  "create table " + TABLE_ARTICLE + "(" + 
+	      ARTICLE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+	      ARTICLE_COLUMN_WEBSITE_ID + " INTEGER, " + 		
+	      ARTICLE_COLUMN_TITLE + " TEXT," +
+	      ARTICLE_COLUMN_DESCRIPTION + " TEXT," +
+	      ARTICLE_COLUMN_URL + " TEXT," + 
+	      ARTICLE_COLUMN_PUBDATE + " TEXT," +    //SQLite does not have a storage class set aside for storing dates and/or times.
+	      ARTICLE_COLUMN_UNREAD + " INTEGER," +  	  //  SQLite does not have a separate Boolean storage class. 
+	      ARTICLE_COLUMN_DONT_DELETE + " INTEGER," +  //  Instead, Boolean values are stored as integers 0 (false) and 1 (true).
+	      " FOREIGN KEY ("+ARTICLE_COLUMN_WEBSITE_ID+") REFERENCES "+TABLE_RSS_CHANNEL+"("+COLUMN_ID+"));";
 
 	  
 	  //W konstruktorze podajemy NAZWE i WERSJE bazy oraz WYWOLUJEMY konstuktor klasy nadrzednej 
 	  public DBopenHelper(Context context) {
-	    super(context, NAZWA_BAZY, null, WERSJA_BAZY);
+	    super(context, DB_NAME, null, DB_VERSION);
 	  }
 
 	  
@@ -87,7 +89,7 @@ public class DBopenHelper extends SQLiteOpenHelper{
 	    
 		Log.w(DBopenHelper.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
 	   
-	    db.execSQL("DROP TABLE IF EXISTS " + NAZWA_TABELI);
+	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_ARTICLE);
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RSS_CHANNEL);
 	    
 	    onCreate(db);
