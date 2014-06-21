@@ -40,9 +40,7 @@ public class SettingFragment extends PreferenceFragment {
 		 //pobranie rezultatow ustawien urzytkownika
 		 boolean updateEnable = sharedPreferences.getBoolean("prefUpdateEnable", false);	 
 		 String intervalSecond = sharedPreferences.getString("prefIntervalSecond", "60");
-		 boolean powiadomienia = sharedPreferences.getBoolean("prefNotification", false);
 			
-		 Log.i(LOG_TAG, "Notifications: "+powiadomienia);
 		 Log.i(LOG_TAG, "Notification intervals: " +intervalSecond);
 		 
 		 //klasa zarzadza us¸uga

@@ -11,8 +11,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.micromate.mreader.FeedRomeParser;
@@ -109,7 +111,11 @@ public class UpdateArticlesService extends Service {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			
-			if (result) { //if result/new article = true create notification
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			boolean notiEnable = sharedPreferences.getBoolean("prefNotification", false);		
+				
+			
+			if (result && notiEnable) { //if result/new article = true create notification
 				createNewArticleNotification();
 			}
 			
@@ -128,7 +134,7 @@ public class UpdateArticlesService extends Service {
 				
 		Notification noti = new Notification.Builder(this)
         	.setContentTitle("New Article")
-        	.setContentText("Click here to update")
+        	.setContentText("Click here to read new article")
         	.setSmallIcon(R.drawable.ic_mreader)
         	//.setLargeIcon(aBitmap)
         	.setContentIntent(pIntent)
