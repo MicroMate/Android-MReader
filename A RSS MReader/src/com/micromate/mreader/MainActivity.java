@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
   
         // setting the nav drawer list adapter
         //adapter = new NavDrawerListAdapter(getApplicationContext(),navDrawerItems);
-        feedListAdapter = new FeedListAdapter(getApplicationContext(), R.layout.fragment_rss_channels, feeds);//TU MOZE BYC BEZ LAYOUT
+        feedListAdapter = new FeedListAdapter(getApplicationContext(), feeds);
         
         //mDrawerList.setAdapter(adapter);
         mDrawerList.setAdapter(feedListAdapter);

@@ -1,31 +1,43 @@
 package com.micromate.mreader.navigationdrawer;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.micromate.mreader.R;
-import com.micromate.mreader.R.id;
-import com.micromate.mreader.R.layout;
-import com.micromate.mreader.database.Feed;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class FeedListAdapter extends ArrayAdapter<Feed>{
+import com.micromate.mreader.R;
+import com.micromate.mreader.database.Feed;
+
+public class FeedListAdapter extends BaseAdapter{
 
 	private Context context;
+	private List<Feed> rssChannel; 
 	
-	private List<Feed> rssChannel = new ArrayList<Feed>();
-	
-	public FeedListAdapter(Context context, int textViewResourceId, List<Feed> articles) {
-		super(context, textViewResourceId, articles);
-		// TODO Auto-generated constructor stub
+	public FeedListAdapter(Context context, List<Feed> articles) {
 		  this.context = context;
 		  this.rssChannel = articles;
+	}
+	
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return rssChannel.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		// TODO Auto-generated method stub
+		return rssChannel.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
 	}
 	
 	@Override
@@ -50,6 +62,5 @@ public class FeedListAdapter extends ArrayAdapter<Feed>{
 	    // 5. retrn rowView
 	    return rowView;
 	}
-	
 
 }
