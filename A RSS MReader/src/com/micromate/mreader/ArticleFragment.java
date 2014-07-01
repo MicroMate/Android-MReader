@@ -4,6 +4,9 @@ import java.net.URL;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -57,8 +60,11 @@ public class ArticleFragment extends Fragment{ //1
 		articleDesc = bundle.getString("ARTICLE_DESC", "default description");		
 		
 		//setting title in ActionBar
-		getActivity().getActionBar().setTitle(feedTitle);
+		//getActivity().getActionBar().setTitle(feedTitle);
+		getActivity().getActionBar().hide();
+		
 		getActivity().setTitle(feedTitle); //to remember after close naviDrawer 
+		((MainActivity) getActivity()).refreshListView(); //refreshing quantity of unread articles on navigation drawer list
 		
 		//
 		String titleMyFormat = "<h3><font color=#cccccc>"+articleTitle+"</font></h3>";
@@ -99,7 +105,13 @@ public class ArticleFragment extends Fragment{ //1
 		return rootView;  //5
 	}
 		
-	
+	@Override
+	public void onDestroyView() {
+		// TODO Auto-generated method stub
+		super.onDestroyView();
+		getActivity().getActionBar().show();
+	}
+
 	private class URLDrawable extends BitmapDrawable {
 		public URLDrawable(){      // BitmapDrawable() constructor was deprecated in API level 4. 
 			super(getActivity().getResources());   //instead constructor: BitmapDrawable(Resource res);
@@ -154,13 +166,21 @@ public class ArticleFragment extends Fragment{ //1
 	            //String source = params[0];
 	            //return fetchDrawable(source);
 	        	Drawable drawable = null;
+	        	
+	        	//This inSampleSize option reduces memory consumption.
+	        	BitmapFactory.Options options = new BitmapFactory.Options();
+	        	options.inSampleSize = 2;  //returning smaller image to save memory, 1/2 size
 	        
 	        	try {
 	        		drawable = getResources().getDrawable( R.drawable.ic_action_picture);
 	        	        
 	        		//InputStream is = fetch(urlString);
 	            	URL url = new URL(inputURL[0]);
-	                drawable = Drawable.createFromStream(url.openStream(), "src");
+	                //drawable = Drawable.createFromStream(url.openStream(), "src");
+	                //Decode image size
+	                Bitmap myBitmap = BitmapFactory.decodeStream(url.openStream(), null, options);
+	                getActivity().getResources();
+					drawable = new BitmapDrawable(Resources.getSystem(),myBitmap);
 	            } catch (Exception e) {
 	            	e.printStackTrace();
 	                

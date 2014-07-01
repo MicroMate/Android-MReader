@@ -17,12 +17,12 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.micromate.mreader.FeedRomeParser;
 import com.micromate.mreader.MainActivity;
 import com.micromate.mreader.R;
 import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
+import com.micromate.mreader.parsers.FeedRomeParser;
 
 public class UpdateArticlesService extends Service {
 	private FeedRomeParser feedRomeParser;

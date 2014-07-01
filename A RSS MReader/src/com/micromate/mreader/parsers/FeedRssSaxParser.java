@@ -1,4 +1,4 @@
-package com.micromate.mreader;
+package com.micromate.mreader.parsers;
 
 import java.util.ArrayList;
 import java.util.List;

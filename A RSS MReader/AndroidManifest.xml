@@ -7,42 +7,67 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="18" />
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_mreader"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- The main/home activity (it has no parent activity) -->
         <activity
             android:name="com.micromate.mreader.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
- 
-		<!--  
+
+        <!--
         <service 
             android:name="com.micromate.mreader.service.NewArticleService" 
             android:label="@string/app_name" >
         </service>
         -->
-        <service 
-            android:name="com.micromate.mreader.service.UpdateArticlesService" 
+        <service
+            android:name="com.micromate.mreader.service.UpdateArticlesService"
             android:label="@string/app_name" >
         </service>
-        
-         <receiver android:name="com.micromate.mreader.service.AlarmReceiver" />
-        
+
+        <receiver android:name="com.micromate.mreader.service.AlarmReceiver" />
+
         <activity
             android:name="com.micromate.mreader.ServiceAlarmManager"
             android:label="@string/app_name" >
+        </activity>
+
+        <!-- A child of the main activity -->
+        <activity
+            android:name="com.micromate.mreader.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:parentActivityName="com.micromate.mreader.MainActivity" >
+            <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.micromate.mreader.MainActivity" />
+        </activity>
+        
+        <!-- A child of the main activity -->
+        <activity
+            android:name="com.micromate.mreader.FeedAddRssActivity"
+            android:label="@string/title_activity_add_feed" 
+            android:parentActivityName="com.micromate.mreader.MainActivity" >
+              <!-- Parent activity meta-data to support API level 7+ -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.micromate.mreader.MainActivity" />
         </activity>
         
     </application>

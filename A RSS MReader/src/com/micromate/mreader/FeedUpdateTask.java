@@ -3,15 +3,16 @@ package com.micromate.mreader;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
+import com.micromate.mreader.parsers.FeedRomeParser;
 
 public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 	
@@ -19,25 +20,37 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 	private DBoperacje baza;
 	//private FeedRssSaxParser feedRssSaxParser;
 	private FeedRomeParser feedRomeParser;
-	private ProgressDialog pDialog;
-	
+	//private ProgressDialog pDialog;
+	private List<Feed> feed;
+	private MenuItem menuItem;
 	
 	private static final String LOG_TAG = "FeedUpdateTask";
 	
-	public FeedUpdateTask(Context context) {
+	public FeedUpdateTask(Context context, MenuItem menuItem) {
 		this.context = context; 
 		baza = new DBoperacje(context);
+		this.menuItem = menuItem;
+		
 	}
 
 	
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		pDialog = new ProgressDialog(context);
-		pDialog.setMessage("Updating RSS Information ...");
-		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(false);
-		pDialog.show();
+		
+		//An action view (progress circle) will be displayed in item place (refresh place)
+		menuItem.setActionView(R.layout.progressbar);
+		menuItem.expandActionView();//expand action view with menu item (refresh item)
+		
+		// Progress circle well be displayed on the action bar 
+		//((MainActivity) context).setProgressBarIndeterminateVisibility(Boolean.TRUE); 
+		
+		// Progress bar using dialog
+//		pDialog = new ProgressDialog(context);
+//		pDialog.setMessage("Updating RSS Information ...");
+//		pDialog.setIndeterminate(false);
+//		pDialog.setCancelable(false);
+//		pDialog.show();
 	}
 	
 	
@@ -47,7 +60,7 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 		
 		boolean newArticle = false;
 		
-		List<Feed> feed = new ArrayList<Feed>(); 
+		feed = new ArrayList<Feed>(); 
 		feed = baza.readAllRssChannels();
 		
 		// Parser ROME
@@ -130,14 +143,20 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 		
 		Log.i(LOG_TAG,"KONIEC WATKU");
 		
-		pDialog.dismiss();
+		//pDialog.dismiss();
+		//((MainActivity) context).setProgressBarIndeterminateVisibility(Boolean.FALSE); 
+		menuItem.collapseActionView();
+		menuItem.setActionView(null);
 		
 		/*if no exception*/
-		if (result)
+		if (result) {
 			Toast.makeText(context, "Aticles Updated", Toast.LENGTH_SHORT).show();
+			//countUnreadArticles();
+			//feedListAdapter.notifyDataSetChanged();
+			((MainActivity)context).refreshListView();
+		}
 		else
 			Toast.makeText(context, "No New Articles", Toast.LENGTH_SHORT).show();
 		}
 		
-	
 }

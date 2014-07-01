@@ -3,7 +3,7 @@
  * ROME is a set of RSS and Atom Utilities for Java.
  */
 		
-package com.micromate.mreader;
+package com.micromate.mreader.parsers;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;

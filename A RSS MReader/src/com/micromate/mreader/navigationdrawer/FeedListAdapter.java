@@ -1,8 +1,11 @@
-package com.micromate.mreader;
+package com.micromate.mreader.navigationdrawer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.micromate.mreader.R;
+import com.micromate.mreader.R.id;
+import com.micromate.mreader.R.layout;
 import com.micromate.mreader.database.Feed;
 
 import android.content.Context;
