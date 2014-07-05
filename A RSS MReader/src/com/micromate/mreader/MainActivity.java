@@ -117,7 +117,8 @@ public class MainActivity extends Activity {
         
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-        	displayView(0);   //przy starcie wyswietlana pierwsza pozycja z listy feed, ZMIENIC BY ZAPAMIETYWAüO STAN
+        	if (!feeds.isEmpty()) //when application has not added any feed
+        		displayView(0);   //przy starcie wyswietlana pierwsza pozycja z listy feed, ZMIENIC BY ZAPAMIETYWAï¿½O STAN
         }
     }
  
@@ -155,7 +156,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        //return true;  //brak przycisk—w na action bar
+        //return true;  //brak przyciskï¿½w na action bar
         return super.onCreateOptionsMenu(menu);
     }
  
@@ -219,8 +220,14 @@ public class MainActivity extends Activity {
     	Fragment fragment = new ArticlesListFragment();
     	/**/
 		Bundle bundle = new Bundle();
-		bundle.putInt("FEED_ID", feeds.get(position).get_id()); //for ArticlesListFragment
-		bundle.putString("FEED_TITLE", feeds.get(position).getTitle()); //for ArticleFragment
+		try {
+			setTitle(feeds.get(position).getTitle()); //set selected title on action bar  
+			bundle.putInt("FEED_ID", feeds.get(position).get_id()); //for ArticlesListFragment
+			bundle.putString("FEED_TITLE", feeds.get(position).getTitle()); //for ArticleFragment
+		}
+		catch(IndexOutOfBoundsException e){
+			e.printStackTrace();
+		}
 		fragment.setArguments(bundle);
 		
 		FragmentManager fragmentManager = getFragmentManager();
@@ -230,10 +237,9 @@ public class MainActivity extends Activity {
     	transaction.replace(R.id.frame_container, fragment);
     	transaction.commit();	
         
-    	// update selected item and title, then close the drawer
+    	// update selected item, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerList.setSelection(position);
-        setTitle(feeds.get(position).getTitle());
         if(mDrawerLayout!=null)
         	mDrawerLayout.closeDrawer(mDrawerList);
     }

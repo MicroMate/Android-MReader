@@ -23,6 +23,7 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.io.XmlReader;
 import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.Feed;
 
+
 public class FeedRomeParser {
 	
 	private Feed feed;  //RSS Channel
