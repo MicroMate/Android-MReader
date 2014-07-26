@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -236,7 +237,6 @@ public class MainActivity extends Activity {
     	FragmentTransaction transaction = fragmentManager.beginTransaction();
     	transaction.replace(R.id.frame_container, fragment);
     	transaction.commit();	
-        
     	// update selected item, then close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerList.setSelection(position);
@@ -272,8 +272,8 @@ public class MainActivity extends Activity {
         	mDrawerToggle.onConfigurationChanged(newConfig);
     }
     
-    //refreshing navigation drawer list - feed list 
-    public void refreshListView(){
+    //udating navigation drawer list - feed list 
+    public void updateFeedListView(){
     	countUnreadArticles();
     	feedListAdapter.notifyDataSetChanged();
     }
@@ -295,4 +295,10 @@ public class MainActivity extends Activity {
   		}
   	}
   	
+  	//this method is called from FeedUpdateTask class in method onPostExecute (after refreshing feeds)
+  	public void updateArticleListView(){
+  		ArticlesListFragment fragment = (ArticlesListFragment) getFragmentManager().findFragmentById(R.id.frame_container);
+  		fragment.updateArticleListView();
+  		Log.d("MainActivity", "updateArticleListView");
+  	}
 }

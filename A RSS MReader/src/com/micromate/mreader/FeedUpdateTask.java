@@ -86,7 +86,7 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 		return newArticle;
 		
 //		Parser SAX
-// 		int exception = 0;  //task zwraca¸Êtyp wyjˆtku
+// 		int exception = 0;  //task zwracaï¿½ï¿½typ wyjï¿½tku
 //		
 //		for (Feed f: feed){
 //		
@@ -153,7 +153,8 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 			Toast.makeText(context, "Aticles Updated", Toast.LENGTH_SHORT).show();
 			//countUnreadArticles();
 			//feedListAdapter.notifyDataSetChanged();
-			((MainActivity)context).refreshListView();
+			((MainActivity)context).updateFeedListView();
+			((MainActivity)context).updateArticleListView();
 		}
 		else
 			Toast.makeText(context, "No New Articles", Toast.LENGTH_SHORT).show();

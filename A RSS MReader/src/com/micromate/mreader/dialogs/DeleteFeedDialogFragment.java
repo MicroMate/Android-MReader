@@ -50,7 +50,7 @@ public class DeleteFeedDialogFragment extends DialogFragment {
 	    		feeds.addAll(baza.readAllRssChannels());	
 	    		
 	    		//refreshing navigation drawer list - feed list 
-	    		((MainActivity)getActivity()).refreshListView();
+	    		((MainActivity)getActivity()).updateFeedListView();
 	            	   
 	    		}
 	    	});

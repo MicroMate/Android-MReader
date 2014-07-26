@@ -82,17 +82,18 @@ public class FeedRomeParser {
 			while (iterator.hasNext()) {
 				article = new Article();
 				
-				SyndEntry ent = iterator.next();
+				SyndEntry entry = iterator.next();
 				
-				article.setTitle(ent.getTitle());					//Article Title
-				article.setUrl(ent.getUri());						//Article Web Link
-				article.setPublishedDate(ent.getPublishedDate());	//Article Published Date
+				article.setTitle(entry.getTitle());					//Article Title
+				article.setUrl(entry.getUri());						//Article Web Link
+				article.setPublishedDate(entry.getPublishedDate());	//Article Published Date
 				//
 				@SuppressWarnings("unchecked")
-				List<SyndContent> contents = ent.getContents();		//Article Content
-				String value = contents.get(0).getValue();
-				article.setDescription(value);
-				
+				List<SyndContent> contents = entry.getContents();		//Article Content
+				if (!contents.isEmpty()){
+					String value = contents.get(0).getValue();
+					article.setDescription(value);
+				}
 				articles.add(article);				
 				
 			}

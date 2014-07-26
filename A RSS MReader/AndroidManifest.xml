@@ -20,7 +20,7 @@
 
         <!-- The main/home activity (it has no parent activity) -->
         <activity
-            android:name="com.micromate.mreader.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter>
@@ -37,39 +37,44 @@
         </service>
         -->
         <service
-            android:name="com.micromate.mreader.service.UpdateArticlesService"
+            android:name=".service.UpdateArticlesService"
             android:label="@string/app_name" >
         </service>
 
-        <receiver android:name="com.micromate.mreader.service.AlarmReceiver" />
+        <receiver android:name=".service.AlarmReceiver" />
 
         <activity
-            android:name="com.micromate.mreader.ServiceAlarmManager"
+            android:name=".ServiceAlarmManager"
             android:label="@string/app_name" >
         </activity>
 
         <!-- A child of the main activity -->
         <activity
-            android:name="com.micromate.mreader.SettingActivity"
+            android:name=".SettingActivity"
             android:label="@string/title_activity_setting"
-            android:parentActivityName="com.micromate.mreader.MainActivity" >
+            android:parentActivityName=".MainActivity" >
+
             <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.micromate.mreader.MainActivity" />
         </activity>
-        
+
         <!-- A child of the main activity -->
         <activity
-            android:name="com.micromate.mreader.FeedAddRssActivity"
-            android:label="@string/title_activity_add_feed" 
-            android:parentActivityName="com.micromate.mreader.MainActivity" >
-              <!-- Parent activity meta-data to support API level 7+ -->
+            android:name=".FeedAddRssActivity"
+            android:label="@string/title_activity_add_feed"
+            android:parentActivityName=".MainActivity" >
+
+            <!-- Parent activity meta-data to support API level 7+ -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.micromate.mreader.MainActivity" />
         </activity>
-        
+        <activity
+            android:name=".ArticleActivity"
+            android:label="@string/title_activity_article" >
+        </activity>
     </application>
 
 </manifest>

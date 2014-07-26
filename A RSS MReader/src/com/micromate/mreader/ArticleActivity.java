@@ -2,7 +2,7 @@ package com.micromate.mreader;
 
 import java.net.URL;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -18,57 +18,48 @@ import android.text.Html.ImageGetter;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ArticleFragment extends Fragment{ //1
+public class ArticleActivity extends Activity {
 
 	private TextView textView1;
 	private ScrollView scrollView;
 	private Button button;
-	private String feedTitle;
 	private String articleTitle;
 	private String articleDesc;
 	private String articleURL;
 	private Bundle bundle;
-	private View rootView;
-	private static final String LOG_TAG ="ArticleFragment";
 	
-	public ArticleFragment(){}
-	
-	
+	//for debugging
+	private static final String LOG_TAG ="ArticleActivity";
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,  //3
-			Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_article);
 		
-		// Inflate the layout for this fragment
-		rootView = inflater.inflate(R.layout.fragment_article, container, false); //4
+		textView1 = (TextView)findViewById(R.id.article_descriptionView3);
+		scrollView = (ScrollView)findViewById(R.id.scrollView1);
+		button = (Button)findViewById(R.id.article_button);
 		
-		textView1 = (TextView)rootView.findViewById(R.id.article_descriptionView3);
-		scrollView = (ScrollView)rootView.findViewById(R.id.scrollView1);
-		button = (Button)rootView.findViewById(R.id.article_button);
-			
-		bundle = this.getArguments();
-		feedTitle = bundle.getString("FEED_TITLE", "title");
+		getActionBar().hide();
+
+		//getting data from parent activity
+		//getIntent - return the intent that started this activity
+		//getExtrras - retrieves a map of extended data from the intent
+		bundle = getIntent().getExtras();
 		articleTitle = bundle.getString("ARTICLE_TITLE", "default title");
 		articleDesc = bundle.getString("ARTICLE_DESC", "default description");		
-		
-		//setting title in ActionBar
-		//getActivity().getActionBar().setTitle(feedTitle);
-		getActivity().getActionBar().hide();
-		
-		getActivity().setTitle(feedTitle); //to remember after close naviDrawer 
-		((MainActivity) getActivity()).refreshListView(); //refreshing quantity of unread articles on navigation drawer list
-		
+				
 		//
 		String titleMyFormat = "<h3><font color=#cccccc>"+articleTitle+"</font></h3>";
-		
 			
 		//textView3.setText(Html.fromHtml(articleDesc)); //fromHtml - that converts HTML into a Spannable for use with a TextView		
 		URLImageParser p = new URLImageParser(textView1);
@@ -97,24 +88,19 @@ public class ArticleFragment extends Fragment{ //1
 		    		Intent buttonIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(articleURL));
 		        	startActivity(buttonIntent);
 		        }catch(Exception e){
-		        	Toast.makeText(getActivity(), "No Link", Toast.LENGTH_SHORT).show();
+		        	Toast.makeText(getApplicationContext(), "No Link", Toast.LENGTH_SHORT).show();
 		        }
 		    }
 		});
 	
-		return rootView;  //5
-	}
+	
 		
-	@Override
-	public void onDestroyView() {
-		// TODO Auto-generated method stub
-		super.onDestroyView();
-		getActivity().getActionBar().show();
 	}
-
+	
+	
 	private class URLDrawable extends BitmapDrawable {
 		public URLDrawable(){      // BitmapDrawable() constructor was deprecated in API level 4. 
-			super(getActivity().getResources());   //instead constructor: BitmapDrawable(Resource res);
+			super(getResources());   //instead constructor: BitmapDrawable(Resource res);
 		}
 	    // the drawable that you need to set, you could set the initial drawing
 	    // with the loading image if you need to
@@ -179,7 +165,8 @@ public class ArticleFragment extends Fragment{ //1
 	                //drawable = Drawable.createFromStream(url.openStream(), "src");
 	                //Decode image size
 	                Bitmap myBitmap = BitmapFactory.decodeStream(url.openStream(), null, options);
-	                getActivity().getResources();
+	                //getActivity().getResources();
+	                getResources();
 					drawable = new BitmapDrawable(Resources.getSystem(),myBitmap);
 	            } catch (Exception e) {
 	            	e.printStackTrace();
@@ -214,6 +201,28 @@ public class ArticleFragment extends Fragment{ //1
 
 	    }
 	}
-		
-}
+	
+	
+	/**
+	 * Menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.article, menu);
+		return true;
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+}
