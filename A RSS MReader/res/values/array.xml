@@ -21,12 +21,6 @@
     </array>
     
     
-    
-     <!-- AlertDialog Feed List Items -->
-    <string-array name="feedlist_option_array">
-        <item >Delete</item>
-    </string-array>
-    
     <!-- Preferenses Alarm Intervals-->
     <string-array name="syncFrequency">
         <item name="1">1 minute</item>

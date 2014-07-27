@@ -139,16 +139,12 @@ public class MainActivity extends Activity {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int position, long id) {
 			// TODO Auto-generated method stub
-			
-			Vibrator vibrator;
-			vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-			vibrator.vibrate(100);
-			
+						
 			DeleteFeedDialogFragment dialog = new DeleteFeedDialogFragment();
 			dialog.setData(feeds, baza, position);
         	dialog.show(getFragmentManager(), "addFeed");
 		
-			return false;
+			return true;
 		}
     }
     

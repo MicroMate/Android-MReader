@@ -27,15 +27,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.micromate.mreader.dialogs.DeleteArticleDialogFragment2;
+
 public class ArticleActivity extends Activity {
 
 	private TextView textView1;
 	private ScrollView scrollView;
-	private ImageView button;
+	private ImageView buttonWeb;
 	private String articleTitle;
 	private String articleDesc;
 	private String articleURL;
 	private Bundle bundle;
+	private ImageView buttonDelete;
 	
 	//for debugging
 	private static final String LOG_TAG ="ArticleActivity";
@@ -47,7 +50,8 @@ public class ArticleActivity extends Activity {
 		
 		textView1 = (TextView)findViewById(R.id.article_descriptionView3);
 		scrollView = (ScrollView)findViewById(R.id.scrollView1);
-		button = (ImageView)findViewById(R.id.articleButtonVisitSite);
+		buttonWeb = (ImageView)findViewById(R.id.articleButtonVisitSite);
+		buttonDelete = (ImageView)findViewById(R.id.articleButtonDelete);
 		
 		getActionBar().hide();
 
@@ -80,7 +84,7 @@ public class ArticleActivity extends Activity {
 		articleURL = bundle.getString("ARTICLE_LINK", "default link");
 		
 		
-		button.setOnClickListener(new OnClickListener() {
+		buttonWeb.setOnClickListener(new OnClickListener() {
 		    @Override
 		    public void onClick(View arg0) {
 		    	Log.d(LOG_TAG,"Article link: "+articleURL);
@@ -93,6 +97,17 @@ public class ArticleActivity extends Activity {
 		    }
 		});
 	
+		buttonDelete.setOnClickListener(new OnClickListener() {
+		    @Override
+		    
+		    public void onClick(View arg0) {
+		    	//delete Article dialog
+				DeleteArticleDialogFragment2 deleteArticle = new DeleteArticleDialogFragment2();
+				deleteArticle.setData(articleTitle,articleURL);
+				deleteArticle.show(getFragmentManager(), "delete article TAG");	
+							
+		    }
+		});
 	
 		
 	}

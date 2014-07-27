@@ -37,4 +37,7 @@
     <string name="title_activity_add_feed">AddFeedActivity</string>
     <string name="title_activity_article">ArticleActivity</string>
 
+    <!-- AlertDialog Feed List Items -->
+    <string name="dialog_delete">Delete</string>
+    
 </resources>
