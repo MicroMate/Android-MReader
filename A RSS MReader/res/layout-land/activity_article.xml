@@ -8,10 +8,10 @@
         android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/linearLayout1"
         android:background="@color/article_text_bg" >
 
         <TextView
@@ -26,39 +26,38 @@
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" >
-
-        <!-- horizontal line -->
-       	<View
-    		android:layout_width="fill_parent"
-    		android:layout_height="1dip"
-    		android:background="@color/article_abar_line"
-		/>
+        android:layout_width="50dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" >
-            
-            <ImageView
-            	android:id="@+id/articleButtonVisitSite"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:layout_toRightOf="@+id/articleButtonDelete"
-            	android:src="@drawable/ic_action_web_site"
-            	android:layout_marginLeft="50dp" />
 
-        	<ImageView
-            	android:id="@+id/articleButtonDelete"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	
-            	android:src="@drawable/ic_action_remove" />
-        	</RelativeLayout>
+            <ImageView
+                android:id="@+id/articleButtonVisitSite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_web_site" />
+
+            <ImageView
+                android:id="@+id/articleButtonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/articleButtonVisitSite"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/ic_action_remove" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/article_abar_line" />
 
     </RelativeLayout>
 

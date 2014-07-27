@@ -22,7 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +31,7 @@ public class ArticleActivity extends Activity {
 
 	private TextView textView1;
 	private ScrollView scrollView;
-	private Button button;
+	private ImageView button;
 	private String articleTitle;
 	private String articleDesc;
 	private String articleURL;
@@ -47,7 +47,7 @@ public class ArticleActivity extends Activity {
 		
 		textView1 = (TextView)findViewById(R.id.article_descriptionView3);
 		scrollView = (ScrollView)findViewById(R.id.scrollView1);
-		button = (Button)findViewById(R.id.article_button);
+		button = (ImageView)findViewById(R.id.articleButtonVisitSite);
 		
 		getActionBar().hide();
 

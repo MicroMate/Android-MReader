@@ -14,10 +14,18 @@
 
    	<color name="feed_list_title">#DDDDDD</color>
    	<color name="feed_list_link">#001111</color>
-   		
+   	
+   	<!-- article list fragment -->	
    	<color name="article_list_unread">#EEEEEE</color>
    	<color name="article_list_read">#D1D1D1</color>
    	<color name="article_list_read_bg">#005252</color>
    	<color name="article_list_date">#001111</color>
+   	
+   	<!-- article activity -->
+   	<color name="article_text_bg">#003333</color>
+  	<color name="article_text">#DEEEEE</color>
+  	<!-- article activity custom bottom action bar  -->
+   	<color name="article_abar_line">#008585</color>	
+   	
    	
 </resources>
