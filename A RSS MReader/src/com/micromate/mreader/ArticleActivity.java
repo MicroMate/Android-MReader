@@ -3,6 +3,7 @@ package com.micromate.mreader;
 import java.net.URL;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -10,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,8 +69,16 @@ public class ArticleActivity extends Activity {
 		String titleMyFormat = "<h3><font color=#cccccc>"+articleTitle+"</font></h3>";
 			
 		//textView3.setText(Html.fromHtml(articleDesc)); //fromHtml - that converts HTML into a Spannable for use with a TextView		
-		URLImageParser p = new URLImageParser(textView1);
-		Spanned htmlSpan = Html.fromHtml(titleMyFormat + articleDesc, p, null);
+		URLImageParser imageParser = new URLImageParser(textView1);
+		
+		Spanned htmlSpan;
+		
+		if (isNetworkAvailable())
+			htmlSpan = Html.fromHtml(titleMyFormat + articleDesc.replace("</p>", ""), imageParser, null);  //with images
+		else
+			htmlSpan = Html.fromHtml(titleMyFormat + articleDesc, null, null);  //without images
+		
+		
 		textView1.setText(htmlSpan);
 		
 		textView1.setMovementMethod(LinkMovementMethod.getInstance()); //enable links
@@ -112,6 +123,20 @@ public class ArticleActivity extends Activity {
 		
 	}
 	
+	/**
+	 * Detect whether there is an Internet connection available
+	 */
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	
+	
+	/**
+	 * Image parser
+	 */
 	
 	private class URLDrawable extends BitmapDrawable {
 		public URLDrawable(){      // BitmapDrawable() constructor was deprecated in API level 4. 
@@ -181,41 +206,46 @@ public class ArticleActivity extends Activity {
 	                //Decode image size
 	                Bitmap myBitmap = BitmapFactory.decodeStream(url.openStream(), null, options);
 	                //getActivity().getResources();
-	                getResources();
+	               // getResources();
 					drawable = new BitmapDrawable(Resources.getSystem(),myBitmap);
 	            } catch (Exception e) {
 	            	e.printStackTrace();
 	                
 	            } 
 	        	
-	        	if (drawable !=null)
+	        	if (drawable !=null){
 	        		drawable.setBounds(0, 0, 0 + drawable.getIntrinsicWidth(), 0 + drawable.getIntrinsicHeight());  
-	        	
+	        	}
 	        	return drawable;
 	        }
 
 	        @Override
 	        protected void onPostExecute(Drawable result) {
 	           
+	        	//Log.d("height",""+result.getIntrinsicHeight()); 
+	            //Log.d("width",""+result.getIntrinsicWidth()); 
+	            
 	        	// set the correct bound according to the result from HTTP call	        	
 	 	        if (result != null){
 	 	        	urlDrawable.setBounds(0, 0, 0 + result.getIntrinsicWidth(), 0 + result.getIntrinsicHeight()); 
-
+	 	        	
 	 	        	// change the reference of the current drawable to the result
 	 	        	// from the HTTP call
-	 	        	urlDrawable.drawable = result;
-	        	
+	 	        	urlDrawable.drawable = result;	        
+	 	        	
 	 	        	// redraw the image by invalidating the container
-	 	        	textView.invalidate();
-	                      
+	 	        	textView.invalidate();             
+	 	        	
 	 	        	textView.setHeight((textView.getHeight() + result.getIntrinsicHeight()));
-
+	 	        		 	          	 	        	
+	 	        	//
 	 	        	textView.setEllipsize(null);
 	 	        }
 	        }
 
 	    }
 	}
+		
 	
 	
 	/**
