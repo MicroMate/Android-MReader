@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.micromate.mreader.DeleteOldArticles;
 import com.micromate.mreader.MainActivity;
 import com.micromate.mreader.R;
 import com.micromate.mreader.SettingActivity;
@@ -28,6 +29,7 @@ import com.micromate.mreader.parsers.FeedRomeParser;
 public class UpdateArticlesService extends Service {
 	private FeedRomeParser feedRomeParser;
 	private DBoperacje baza;
+	private DeleteOldArticles deleteOldArticles;
 	
 	private static final String	LOG_TAG = "MyService";
 
@@ -114,12 +116,18 @@ public class UpdateArticlesService extends Service {
 			
 			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 			boolean notiEnable = sharedPreferences.getBoolean(SettingActivity.KEY_NOTIFICATIONS_ENABLED, false);		
-				
+			boolean isEnabledDelete = sharedPreferences.getBoolean(SettingActivity.KEY_DELETE_ENABLED, false);	
 			
 			if (result && notiEnable) { //if result/new article = true create notification
 				createNewArticleNotification();
-			}
+				
+				//deleting the oldest articles except of the favorite articles
+				if (isEnabledDelete){
+					deleteOldArticles = new DeleteOldArticles(getApplicationContext(), baza);
+					deleteOldArticles.startDeleting();
 			
+				}
+			}
 		}
 			
 	}

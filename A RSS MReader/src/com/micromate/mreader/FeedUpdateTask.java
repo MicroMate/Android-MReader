@@ -25,7 +25,8 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 	//private ProgressDialog pDialog;
 	private List<Feed> feeds;
 	private MenuItem menuItem;
-	SharedPreferences sharedPreferences;
+	private SharedPreferences sharedPreferences;
+	private DeleteOldArticles deleteOldArticles;
 	
 	private static final String LOG_TAG = "FeedUpdateTask";
 	
@@ -161,8 +162,11 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 			//  retrieve preferences values
 			sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 			boolean isEnabled = sharedPreferences.getBoolean(SettingActivity.KEY_DELETE_ENABLED, false);
-			if (isEnabled)
-				deleteOldArticles();
+			if (isEnabled) {
+				deleteOldArticles = new DeleteOldArticles(context, baza);
+				deleteOldArticles.startDeleting();
+			}
+			
 			
 			((MainActivity)context).updateFeedListView();
 			((MainActivity)context).updateArticleListView();
@@ -170,44 +174,6 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 		else
 			Toast.makeText(context, "No New Articles", Toast.LENGTH_SHORT).show();
 		}
-		
-	
-	// Auto delete the oldest articles. 
-	// Quantity of articles will be kept is specified by the user in application settings
-	private void deleteOldArticles(){
-		
-		List<Article> articles;
-		int notMarkedArticles; //not favorite articles
-		int articlesToDelete; //q-ty of articles to delete
-		int articlesToKept; //q-ty of articles will be kept except favorite articles
-		String articleURL;
-		
-		articlesToKept = Integer.valueOf(sharedPreferences.getString(SettingActivity.KEY_DELETE_QTY_KEPT, "20"));	
-		
-		for (Feed f: feeds){
-			articles = new ArrayList<Article>();
-  			articles = baza.getAllArticlesByID(f.get_id());
-  			notMarkedArticles = 0;
-  			for(Article a: articles){
-  				if (a.getIntFavorite() != 1){   // if is not favorite article can be deleted  (article is not star marked)
-  					notMarkedArticles++;			
-  				}
-  			}
-  			// deleting articles
-  			articlesToDelete = notMarkedArticles - articlesToKept;
-  			
-  			Log.d(LOG_TAG, "articles not checked: " +notMarkedArticles+" limit: "+articlesToKept);
-  				
-  			while (articlesToDelete > 0){
-  				Log.d(LOG_TAG, "deleting article");
-  				articleURL = baza.getOldestArticleUrlByID(f.get_id());
-  				baza.deleteArticle(articleURL);
-  				articlesToDelete--;
-  			}	
-  				
-		}
-			
-	}
 		
 }
 	
