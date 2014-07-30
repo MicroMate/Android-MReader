@@ -49,7 +49,7 @@ public class ArticlesListFragment extends Fragment {
 		
     	/*getting all RSS channels from Data Base*/
 		articles = baza.getAllArticlesByID(rssChannelID);		  
-		articlesListAdapter = new ArticlesListAdapter(getActivity(), R.layout.fragment_articles_list, articles);
+		articlesListAdapter = new ArticlesListAdapter(getActivity(), R.layout.fragment_articles_list, articles, baza);
 	    listView.setAdapter(articlesListAdapter);
 		
 	    

@@ -18,17 +18,7 @@
     <string name="url_submit">Submit</string>
     <string name="url_website">http://</string>
 
-    <!-- Preferences -->
-    <string name="pref_update">Update</string>
-    <string name="pref_update_enabled">Enabled</string>
-    <string name="pref_update_enabled_summary">Automatic update an articles</string>
-    <string name="pref_update_interval">Update interval</string>
-    <string name="pref_update_interval_summary">interval time</string>
-    <string name="pref_noti">Notifications</string>
-    <string name="pref_noti_enabled">Enabled</string>
-    <string name="pref_noti_enabled_summary">Controls the appearance of notification </string>
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="hello_world">Hello world!</string>
+  
 
     <!-- Dialog Add Feed -->
     <string name="title">Add Feed</string>

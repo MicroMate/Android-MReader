@@ -44,7 +44,7 @@ public class DBoperacje {
         values.put(DBopenHelper.ARTICLE_COLUMN_URL, article.getUrl()); 
         values.put(DBopenHelper.ARTICLE_COLUMN_PUBDATE, article.getDate()); 
         values.put(DBopenHelper.ARTICLE_COLUMN_UNREAD, article.getUnread()); 
-        values.put(DBopenHelper.ARTICLE_COLUMN_DONT_DELETE, article.getDontDelete()); 
+        values.put(DBopenHelper.ARTICLE_COLUMN_DONT_DELETE, article.getIntFavorite()); 
               
         // Inserting Row
         db.insert(DBopenHelper.TABLE_ARTICLE, null, values);
@@ -81,7 +81,7 @@ public class DBoperacje {
                 article.setUrl(cursor.getString(4));
                 article.setDate(cursor.getString(5));
                 article.setUnread(cursor.getInt(6));
-                article.setDontDelete(cursor.getInt(7));
+                article.setIntFavorite(cursor.getInt(7));
                   
                 //licznik (nr pozycji na liscie - mozna dodac do ziarna)
                 //wynik.setNr(licznik++);
@@ -99,7 +99,7 @@ public class DBoperacje {
     }
     
     
-    // Reading all articles WHERE channel_id ORDER by date  
+    // Reading all articles WHERE channel_id ORDER by date, DESC-newest on the top 
     public List<Article> getAllArticlesByID(int channel_id) {
     	db = dbOpenHelper.getWritableDatabase();
     	   
@@ -124,7 +124,7 @@ public class DBoperacje {
                 article.setUrl(cursor.getString(4));
                 article.setDate(cursor.getString(5));
                 article.setUnread(cursor.getInt(6));
-                article.setDontDelete(cursor.getInt(7));
+                article.setIntFavorite(cursor.getInt(7));
                                     
                 // Adding contact to list
                 lista.add(article);
@@ -137,8 +137,8 @@ public class DBoperacje {
         return lista;
     }
     
-    // Getting Latest date of article
-    public String getLatestArticleDate() {
+    // Getting Newest date of article
+    public String getNewestArticleDate() {
     	   db = dbOpenHelper.getWritableDatabase();
     	   
     	String latestDate = "0000-00-00 00:00:00";
@@ -159,15 +159,15 @@ public class DBoperacje {
         return latestDate;
     }
     
-    // Getting Latest date of article WHERE channel_id
-    public String getLatestArticleDateByID(long channel_id) {
+    // Getting Newest date of article WHERE channel_id
+    public String getNewestArticleDateByID(long channel_id) {
     	   db = dbOpenHelper.getWritableDatabase();
     	   
     	String latestDate = "0000-00-00 00:00:00";
         // Select All Query      
         String selectQuery = "SELECT pubDate FROM " + DBopenHelper.TABLE_ARTICLE+" " +
         					 "WHERE website_id = '"+channel_id+"' " +
-        		             "ORDER BY pubDate DESC LIMIT 1";
+        		             "ORDER BY pubDate DESC LIMIT 1";   //DESC descending - 1 article the Newest
         Cursor cursor = db.rawQuery(selectQuery, null);
 		
         // looping through all rows and adding to list
@@ -179,6 +179,30 @@ public class DBoperacje {
         cursor.close();
         db.close(); // Closing database connection
         return latestDate;       
+    }
+    
+    // Getting url of Oldest article WHERE channel_id
+    public String getOldestArticleUrlByID(long channel_id) {
+    	   db = dbOpenHelper.getWritableDatabase();
+    	   
+    	String url = null; 
+        // Select All Query      
+        String selectQuery = "SELECT +" + DBopenHelper.ARTICLE_COLUMN_URL+ 
+        					 " FROM " + DBopenHelper.TABLE_ARTICLE+
+        					 " WHERE website_id = '"+channel_id+"'" +
+        					 " AND "+DBopenHelper.ARTICLE_COLUMN_DONT_DELETE+" = 0"+
+        		             " ORDER BY pubDate ASC LIMIT 1";   //DESC descending - 1 article the Newest
+        Cursor cursor = db.rawQuery(selectQuery, null);
+		
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+           	             
+            url = cursor.getString(0);
+                
+        }
+        cursor.close();
+        db.close(); // Closing database connection
+        return url;       
     }
     
     
@@ -282,18 +306,50 @@ public class DBoperacje {
         return result; 
     }
     
+  
+    /*
+     * UPDATE ARTICLES
+     */
+
     //mark to read the article 
     public void setArticleRead(String link){
     	db = dbOpenHelper.getWritableDatabase();
+
 //    	ContentValues values = new ContentValues();
 //      values.put(DBopenHelper.ARTICLE_COLUMN_UNREAD, 1); //set 1 = read
 //      String whereClause = DBopenHelper.ARTICLE_COLUMN_URL + " = '"+link+ "'";
 //      db.update(DBopenHelper.TABLE_ARTICLE, values, whereClause, null);  
-    	//drugi spos—b
+
+    	//drugi sposob
         String query = "UPDATE article SET unread = 1 WHERE url = '"+ link +"'";
         db.execSQL(query);
         db.close(); // Closing database connection
           
     }
     
+    //mark favorite article
+    public void setArticleFavorite(String link){
+    	db = dbOpenHelper.getWritableDatabase();
+ 
+    	String query = "UPDATE article "
+        			 + "SET "+DBopenHelper.ARTICLE_COLUMN_DONT_DELETE +" = 1 "
+        			 + "WHERE url = '"+ link +"'";
+        
+    	db.execSQL(query);
+        db.close(); // Closing database connection
+          
+    }
+    
+    //mark favorite article
+    public void setArticleUnfavorite(String link){
+    	db = dbOpenHelper.getWritableDatabase();
+ 
+    	String query = "UPDATE article "
+        			 + "SET "+DBopenHelper.ARTICLE_COLUMN_DONT_DELETE +" = 0 "
+        			 + "WHERE url = '"+ link +"'";
+        
+    	db.execSQL(query);
+        db.close(); // Closing database connection
+          
+    }
 }

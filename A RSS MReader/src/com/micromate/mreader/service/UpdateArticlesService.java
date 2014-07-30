@@ -19,6 +19,7 @@ import android.util.Log;
 
 import com.micromate.mreader.MainActivity;
 import com.micromate.mreader.R;
+import com.micromate.mreader.SettingActivity;
 import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
@@ -91,7 +92,7 @@ public class UpdateArticlesService extends Service {
 				Log.i(LOG_TAG,"Updating feed: "+f.getRssLink());
 		
 				feedRomeParser = new FeedRomeParser();
-				if (feedRomeParser.getNewArticles(f.getRssLink(), baza.getLatestArticleDateByID(f.get_id())))
+				if (feedRomeParser.getNewArticles(f.getRssLink(), baza.getNewestArticleDateByID(f.get_id())))
 				{
 					//Adding new Articles to Database			
 					List<Article> articles = new ArrayList<Article>();
@@ -112,7 +113,7 @@ public class UpdateArticlesService extends Service {
 			super.onPostExecute(result);
 			
 			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-			boolean notiEnable = sharedPreferences.getBoolean("prefNotification", false);		
+			boolean notiEnable = sharedPreferences.getBoolean(SettingActivity.KEY_NOTIFICATIONS_ENABLED, false);		
 				
 			
 			if (result && notiEnable) { //if result/new article = true create notification

@@ -16,7 +16,7 @@ public class Article {
 	private String url;
 	private String date;
 	private Integer unread = 0;  //SQLite does not have a Boolean type.   0 = unread, 1 = read article 
-	private Integer dontDelete = 0; //	0 = don't delete article, 1 = article can be deleted
+	private boolean favorite = false; //	 false = article can be deleted,  true = don't delete article (marked with star), 
 	
 //	public Article(String title, String description, String url, String date) {
 //		this.title = title;
@@ -77,7 +77,7 @@ public class Article {
 	public void setDate(String date){
 		this.date = date;
 	}
-
+	
 	public Integer getUnread() {
 		return unread;
 	}
@@ -86,14 +86,28 @@ public class Article {
 		this.unread = unread;
 	}
 	
-	public Integer getDontDelete() {
-		return dontDelete;
+	//for sqlite
+	public Integer getIntFavorite() {
+		if (favorite)
+			return 1;
+		else
+			return 0;
+	}
+	//for sqlite
+	public void setIntFavorite(Integer favorite) {
+		if (favorite == 1)		
+			this.favorite = true;
+		else
+			this.favorite = false;
+	}	
+
+	public boolean isFavorite() {
+		return favorite;
 	}
 
-	public void setDontDelete(Integer dontDelete) {
-		this.dontDelete = dontDelete;
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
 	}
-	
 
 	public void setPubDate(String pubDate) {
 		//wzor daty z pliku xml
@@ -110,14 +124,14 @@ public class Article {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.w("ArticleDateParser",
-				    "Wystˆpi¸ problem z konwersjˆ pubDate: " + e.toString());
+				    "Wystï¿½piï¿½ problem z konwersjï¿½ pubDate: " + e.toString());
 		}	  
 		
 		this.date = strDate;
 	}
 	
 
-	//W¸asny Format Daty i Godziny, dla wyswietlania na liscie
+	//Wï¿½asny Format Daty i Godziny, dla wyswietlania na liscie
 	public String getListDate() {
 		//wzor daty z pliku xml
 		//SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss ZZZZZ",Locale.UK);
@@ -134,7 +148,7 @@ public class Article {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.w("ArticleDateParser",
-				    "Wystˆpi¸ problem z konwersjˆ daty: " + e.toString());
+				    "Wystï¿½piï¿½ problem z konwersjï¿½ daty: " + e.toString());
 		}	  
 		
 		return strDate;
@@ -156,7 +170,7 @@ public class Article {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.w("ArticleDateParser",
-				    "Wystˆpi¸ problem z konwersjˆ pubDate: " + e.toString());
+				    "Wystï¿½piï¿½ problem z konwersjï¿½ pubDate: " + e.toString());
 		}	  
 		
 		this.date = strDate;
@@ -175,7 +189,7 @@ public class Article {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.w("ArticleDateParser",
-				    "Wystˆpi¸ problem z konwersjˆ daty: " + e.toString());
+				    "Wystï¿½piï¿½ problem z konwersjï¿½ daty: " + e.toString());
 		}	  
 		
 		return date;

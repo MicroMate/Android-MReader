@@ -9,12 +9,12 @@ import android.content.Intent;
 import android.util.Log;
 
 /*
- * Planowanie wykonywania us¸gi
+ * Planowanie wykonywania usï¿½gi
  * 
- * Klasa zarzadza us¸uga (NewArticleService) wsp—¸pracujacˆ z alarmami systemowymi
- * - uruchamianie us¸ugi w okreslonym czasie
- * - wylaczanie us¸ugi
- * - ustawianie interwa¸—w czasowych
+ * Klasa zarzadza usï¿½uga (NewArticleService) wspï¿½ï¿½pracujacï¿½ z alarmami systemowymi
+ * - uruchamianie usï¿½ugi w okreslonym czasie
+ * - wylaczanie usï¿½ugi
+ * - ustawianie interwaï¿½ï¿½w czasowych
  */
 
 public class ServiceAlarmManager {
@@ -65,8 +65,6 @@ public class ServiceAlarmManager {
 		//alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), REPEAT_TIME, pendingIntent);		
 				
 	}
-	
-	
 		
 	public void	stop() {
 

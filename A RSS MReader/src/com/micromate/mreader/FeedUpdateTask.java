@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,8 +23,9 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 	//private FeedRssSaxParser feedRssSaxParser;
 	private FeedRomeParser feedRomeParser;
 	//private ProgressDialog pDialog;
-	private List<Feed> feed;
+	private List<Feed> feeds;
 	private MenuItem menuItem;
+	SharedPreferences sharedPreferences;
 	
 	private static final String LOG_TAG = "FeedUpdateTask";
 	
@@ -60,15 +63,15 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 		
 		boolean newArticle = false;
 		
-		feed = new ArrayList<Feed>(); 
-		feed = baza.readAllRssChannels();
+		feeds = new ArrayList<Feed>(); 
+		feeds = baza.readAllRssChannels();
 		
 		// Parser ROME
-		for (Feed f: feed){			
+		for (Feed f: feeds){			
 			Log.i(LOG_TAG,"Updating feed: "+f.getRssLink());
 	
 			feedRomeParser = new FeedRomeParser();
-			if (feedRomeParser.getNewArticles(f.getRssLink(), baza.getLatestArticleDateByID(f.get_id())))
+			if (feedRomeParser.getNewArticles(f.getRssLink(), baza.getNewestArticleDateByID(f.get_id())))
 			{
 				//Adding new Articles to Database			
 				List<Article> articles = new ArrayList<Article>();
@@ -147,12 +150,20 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 		//((MainActivity) context).setProgressBarIndeterminateVisibility(Boolean.FALSE); 
 		menuItem.collapseActionView();
 		menuItem.setActionView(null);
-		
+				
 		/*if no exception*/
 		if (result) {
 			Toast.makeText(context, "Aticles Updated", Toast.LENGTH_SHORT).show();
 			//countUnreadArticles();
 			//feedListAdapter.notifyDataSetChanged();
+			
+			// AUTO DELETE the oldest articles
+			//  retrieve preferences values
+			sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+			boolean isEnabled = sharedPreferences.getBoolean(SettingActivity.KEY_DELETE_ENABLED, false);
+			if (isEnabled)
+				deleteOldArticles();
+			
 			((MainActivity)context).updateFeedListView();
 			((MainActivity)context).updateArticleListView();
 		}
@@ -160,4 +171,44 @@ public class FeedUpdateTask extends AsyncTask<Void, Void, Boolean> {
 			Toast.makeText(context, "No New Articles", Toast.LENGTH_SHORT).show();
 		}
 		
+	
+	// Auto delete the oldest articles. 
+	// Quantity of articles will be kept is specified by the user in application settings
+	private void deleteOldArticles(){
+		
+		List<Article> articles;
+		int notMarkedArticles; //not favorite articles
+		int articlesToDelete; //q-ty of articles to delete
+		int articlesToKept; //q-ty of articles will be kept except favorite articles
+		String articleURL;
+		
+		articlesToKept = Integer.valueOf(sharedPreferences.getString(SettingActivity.KEY_DELETE_QTY_KEPT, "20"));	
+		
+		for (Feed f: feeds){
+			articles = new ArrayList<Article>();
+  			articles = baza.getAllArticlesByID(f.get_id());
+  			notMarkedArticles = 0;
+  			for(Article a: articles){
+  				if (a.getIntFavorite() != 1){   // if is not favorite article can be deleted  (article is not star marked)
+  					notMarkedArticles++;			
+  				}
+  			}
+  			// deleting articles
+  			articlesToDelete = notMarkedArticles - articlesToKept;
+  			
+  			Log.d(LOG_TAG, "articles not checked: " +notMarkedArticles+" limit: "+articlesToKept);
+  				
+  			while (articlesToDelete > 0){
+  				Log.d(LOG_TAG, "deleting article");
+  				articleURL = baza.getOldestArticleUrlByID(f.get_id());
+  				baza.deleteArticle(articleURL);
+  				articlesToDelete--;
+  			}	
+  				
+		}
+			
+	}
+		
 }
+	
+	
