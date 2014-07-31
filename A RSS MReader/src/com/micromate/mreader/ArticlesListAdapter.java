@@ -71,8 +71,10 @@ public class ArticlesListAdapter extends ArrayAdapter<Article>{
 				else
 					baza.setArticleUnfavorite(articles.get(position).getUrl());
 				
-				//update Article list view (if not updated article losing of checked state
+				//update Article list view (if not updated article losing of checked state)
 				((MainActivity) context).updateArticleListView();
+				//update Feed List in navigation drawer (if is not update it will not counting unread favorite articles) 
+				((MainActivity) context).updateFeedListView();
 			}
 		});
       

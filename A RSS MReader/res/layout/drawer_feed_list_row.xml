@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dip" >
+    android:background="@drawable/nav_list_selector" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -21,8 +21,9 @@
             android:paddingTop="8dip"
             android:text="@string/feed_title"
             android:textColor="@color/feed_list_title"
-            android:textSize="18sp"
-            android:lines="1" />
+            android:textSize="16sp"
+            android:singleLine="true" 
+            />
 
         <TextView
             android:id="@+id/channel_link"
@@ -32,22 +33,22 @@
             android:paddingLeft="8dip"
             android:text="@string/feed_link"
             android:textColor="@color/feed_list_link"
-            android:textSize="15sp" 
-            android:lines="1"/>
+            android:textSize="12sp" 
+            android:singleLine="true"
+            />
     </LinearLayout>
 
     <TextView
         android:id="@+id/channel_unreadQty"
-        android:layout_width="30dp"
-        android:layout_height="15dp"
-        android:layout_alignBottom="@+id/linearLayout1"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/linearLayout1"
+        android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:layout_marginTop="17dp"
         android:background="@drawable/feed_list_unread_bg"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/counter_text_color" />
+        android:textColor="@color/counter_text_color"
+       	android:maxLines="1"
+        android:textSize="16sp" />
 
 </RelativeLayout>

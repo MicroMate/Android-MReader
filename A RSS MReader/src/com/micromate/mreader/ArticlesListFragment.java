@@ -27,6 +27,7 @@ public class ArticlesListFragment extends Fragment {
 	private DBoperacje baza;
 	private int rssChannelID;
 	private Bundle bundle;
+	private int position; //position of the feed list (navigation list)
 
 	//on result code
 	public static final int CODE_ARTICLE_ACTIVITY = 0;
@@ -45,10 +46,24 @@ public class ArticlesListFragment extends Fragment {
 		
 		//getting value from MainActivity(navigation drawer list)
 		bundle = this.getArguments();
-		rssChannelID = bundle.getInt("FEED_ID", 0); 
+		rssChannelID = bundle.getInt("FEED_ID", 0); 		
+		position = bundle.getInt("LIST_POSITION",0);
 		
-    	/*getting all RSS channels from Data Base*/
-		articles = baza.getAllArticlesByID(rssChannelID);		  
+		switch(position) {
+		case 0: //all articles
+			articles = baza.getAllArticle();
+			break;
+		case 1:
+			articles = baza.getAllFavoriteArticle();
+			break;
+		
+		default: 
+			//getting all articles of specified feed from Data Base
+			articles = baza.getAllArticlesByID(rssChannelID);	
+		}
+		
+    	/*getting all articles of specified feed from Data Base*/
+		//articles = baza.getAllArticlesByID(rssChannelID);		  
 		articlesListAdapter = new ArticlesListAdapter(getActivity(), R.layout.fragment_articles_list, articles, baza);
 	    listView.setAdapter(articlesListAdapter);
 		
@@ -112,8 +127,22 @@ public class ArticlesListFragment extends Fragment {
  	
  	
  	public void updateArticleListView(){	
+ 		
  		articles.clear();
-		articles.addAll(baza.getAllArticlesByID(rssChannelID));	
+ 		
+ 		switch(position) {
+		case 0: //all articles
+			articles.addAll(baza.getAllArticle());
+			break;
+		case 1:
+			articles.addAll(baza.getAllFavoriteArticle());
+			break;
+		
+		default: 
+			//getting all articles of specified feed from Data Base
+			articles.addAll(baza.getAllArticlesByID(rssChannelID));	
+		}
+ 			
 		articlesListAdapter.notifyDataSetChanged();
  	}
 		

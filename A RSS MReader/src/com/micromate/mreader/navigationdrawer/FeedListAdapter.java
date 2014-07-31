@@ -47,7 +47,7 @@ public class FeedListAdapter extends BaseAdapter{
 	    LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 	    // 2. Get rowView from inflater
-	    View rowView = inflater.inflate(R.layout.channels_list_row, parent, false);
+	    View rowView = inflater.inflate(R.layout.drawer_feed_list_row, parent, false);
 
 	    // 3. Get the two text view from the rowView
 	    TextView titleView = (TextView) rowView.findViewById(R.id.channel_title);

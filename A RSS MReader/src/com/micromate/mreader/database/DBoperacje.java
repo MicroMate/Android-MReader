@@ -53,14 +53,63 @@ public class DBoperacje {
     
     
         
-    // Reading all Articles rows from database
+    // Reading all Articles rows from database ORDER by date, DESC-newest on the top 
     public List<Article> getAllArticle() {
     	db = dbOpenHelper.getWritableDatabase();
        
     	List<Article> lista = new ArrayList<Article>();
              
         // Select All Query      
-        String selectQuery = "SELECT  * FROM " + DBopenHelper.TABLE_ARTICLE;
+        String selectQuery = "SELECT  * FROM " + DBopenHelper.TABLE_ARTICLE +
+        					 " ORDER BY " + DBopenHelper.ARTICLE_COLUMN_PUBDATE + " DESC";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        
+        //Drugi sposob pobierania danych z bazy
+        //segregowanie wedlug kolumny CZAS (najkrotszy bedzie pierwszy)
+        //Cursor kursor = bazaDanych.query(OpenHelperWynik.NAZWA_TABELI, wszystkieKolumny, null, null, null, null,OpenHelperWynik.NAZWA_KOLUMNY_CZAS); 
+        
+        //int licznik = 1; // dla numeru pozycji na liscie
+        		
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Article article = new Article();
+                
+                article.setId(Integer.parseInt(cursor.getString(0)));
+                article.setChannel_id(Integer.parseInt(cursor.getString(1)));
+                article.setTitle(cursor.getString(2));
+                article.setDescription(cursor.getString(3));
+                article.setUrl(cursor.getString(4));
+                article.setDate(cursor.getString(5));
+                article.setUnread(cursor.getInt(6));
+                article.setIntFavorite(cursor.getInt(7));
+                  
+                //licznik (nr pozycji na liscie - mozna dodac do ziarna)
+                //wynik.setNr(licznik++);
+                
+                // Adding item to list
+                lista.add(article);
+                
+            } while (cursor.moveToNext());
+        }
+ 
+        cursor.close();
+        // return item list
+        db.close(); // Closing database connection
+        return lista;
+    }
+    
+    
+ // Reading all Favorite Articles rows from database ORDER by date, DESC-newest on the top 
+    public List<Article> getAllFavoriteArticle() {
+    	db = dbOpenHelper.getWritableDatabase();
+       
+    	List<Article> lista = new ArrayList<Article>();
+             
+        // Select All Query      
+        String selectQuery = "SELECT  * FROM " + DBopenHelper.TABLE_ARTICLE +
+        					 " WHERE "+ DBopenHelper.ARTICLE_COLUMN_DONT_DELETE+" = 1" +  //favorite articles = don't auto delete
+        					 " ORDER BY " + DBopenHelper.ARTICLE_COLUMN_PUBDATE + " DESC";
         Cursor cursor = db.rawQuery(selectQuery, null);
         
         //Drugi sposob pobierania danych z bazy
@@ -126,7 +175,7 @@ public class DBoperacje {
                 article.setUnread(cursor.getInt(6));
                 article.setIntFavorite(cursor.getInt(7));
                                     
-                // Adding contact to list
+                // Adding article to list
                 lista.add(article);
                 
             } while (cursor.moveToNext());

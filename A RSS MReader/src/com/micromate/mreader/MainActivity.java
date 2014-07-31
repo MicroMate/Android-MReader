@@ -67,14 +67,19 @@ public class MainActivity extends Activity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
  
-        // my
+        // create instance of database class
         baza = new DBoperacje(this);
         feeds = new ArrayList<Feed>();
-        feeds = baza.readAllRssChannels();
+        //adding two first position in navigation drawer
+        feeds.add(new Feed("All Articles", "Articles of all added feeds ", null, null));
+        feeds.add(new Feed("Favorite Articles ", "Articles checked with the star", null, null));
+        // adding all feeds from database
+        feeds.addAll(baza.readAllRssChannels());
+        
+        // method counting unread articles and setting in feed
         countUnreadArticles();         
   
-        // setting the nav drawer list adapter
-        //adapter = new NavDrawerListAdapter(getApplicationContext(),navDrawerItems);
+        // setting the navigation drawer list adapter
         feedListAdapter = new FeedListAdapter(getApplicationContext(), feeds);
         
         //mDrawerList.setAdapter(adapter);
@@ -219,6 +224,7 @@ public class MainActivity extends Activity {
 			setTitle(feeds.get(position).getTitle()); //set selected title on action bar  
 			bundle.putInt("FEED_ID", feeds.get(position).get_id()); //for ArticlesListFragment
 			bundle.putString("FEED_TITLE", feeds.get(position).getTitle()); //for ArticleFragment
+			bundle.putInt("LIST_POSITION", position); //for checking All Articles (pos.0) and Favorite Articles (pos.1)  
 		}
 		catch(IndexOutOfBoundsException e){
 			e.printStackTrace();
@@ -274,19 +280,31 @@ public class MainActivity extends Activity {
     
   //method count and set unread articles of every feed
   	public void countUnreadArticles(){
-  		int unreadQty = 0;
+  		int feedUnreadQty = 0;  //unread articles of specified feed
+  		int allUnreadQty = 0;
+  		int favoriteUnreadQty = 0;
+  		
   		List<Article> articles;
   		
   		for (Feed c: feeds){
-  			unreadQty = 0;
+  			feedUnreadQty = 0;
   			articles = new ArrayList<Article>();
   			articles = baza.getAllArticlesByID(c.get_id());
   			for(Article a: articles){
-  				if (a.getUnread()==0)  //0 = unread an article 
-  					unreadQty++;
+  				if (a.getUnread()==0) {  //0 = unread an article 
+  					feedUnreadQty++;   //counting one feed unread articles
+  					if (a.isFavorite())  //counting favorite unread articles 
+  						favoriteUnreadQty++;
+  				}
   			}
-  			c.setUnreadQuantity(unreadQty);  //setting unread articles quantity
+  			allUnreadQty = allUnreadQty + feedUnreadQty; //counting all unread articles
+  			
+  			c.setUnreadQuantity(feedUnreadQty);  //setting unread articles quantity
   		}
+  		
+  		feeds.get(0).setUnreadQuantity(allUnreadQty);  //position 0 , all articles
+  		feeds.get(1).setUnreadQuantity(favoriteUnreadQty); //position 1 , favorite articles
+  		
   	}
   	
   	//this method is called from FeedUpdateTask class in method onPostExecute (after refreshing feeds)
