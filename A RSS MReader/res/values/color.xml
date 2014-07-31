@@ -27,5 +27,9 @@
   	<!-- article activity custom bottom action bar  -->
    	<color name="article_abar_line">#008585</color>	
    	
+   	<!-- add feed  -->
+   	<color name="add_feed_stroke">#006d6d</color>
+   	<color name="add_feed_link">#007777</color>
+   	
    	
 </resources>

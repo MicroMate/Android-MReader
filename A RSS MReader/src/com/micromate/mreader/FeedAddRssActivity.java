@@ -5,9 +5,11 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,14 +46,19 @@ public class FeedAddRssActivity extends Activity {
 	    editText = (EditText)findViewById(R.id.editText1);
 	    textView = (TextView)findViewById(R.id.textView2);
 	    button = (Button)findViewById(R.id.button1);
-			        
+		
+	  
 			
 	    button.setOnClickListener(new View.OnClickListener() {
 				
 	    	@Override
 	    	public void onClick(View arg0) {
 	    		// TODO Auto-generated method stub
-					
+				
+	    		//hiding keyboard 
+	    	    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+	    	    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+	    		
 	    		String url = editText.getText().toString();
 					
 	    		if (url.length() > 0) {
@@ -143,7 +150,7 @@ public class FeedAddRssActivity extends Activity {
 				}
 				
 				title = feedRomeParser.getFeed().getTitle();
-				textView.setText(title+"\nFeed link: "+rssURL);				
+				textView.setText("New Feed Added\nTitle: "+title+"\nFeed link: "+rssURL);				
 			}
 			else
 				//textView.setText("Unable to resolve host");

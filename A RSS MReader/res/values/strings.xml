@@ -14,7 +14,7 @@
     <string name="desc_list_item_icon">Item Icon</string>
 
     <!-- Add Website -->
-    <string name="url_enter_website">Enter website URL (http://example.com)</string>
+    <string name="url_enter_website">Enter feed URL \nor website URL (http://example.com)</string>
     <string name="url_submit">Submit</string>
     <string name="url_website">http://</string>
 
