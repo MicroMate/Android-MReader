@@ -62,8 +62,8 @@ public class ArticleActivity extends Activity {
 		//getIntent - return the intent that started this activity
 		//getExtrras - retrieves a map of extended data from the intent
 		bundle = getIntent().getExtras();
-		articleTitle = bundle.getString("ARTICLE_TITLE", "default title");
-		articleDesc = bundle.getString("ARTICLE_DESC", "default description");		
+		articleTitle = bundle.getString("ARTICLE_TITLE");
+		articleDesc = bundle.getString("ARTICLE_DESC");		
 				
 		//
 		String titleMyFormat = "<h3><font color=#cccccc>"+articleTitle+"</font></h3>";
@@ -92,7 +92,7 @@ public class ArticleActivity extends Activity {
 	    });
 		
 		
-		articleURL = bundle.getString("ARTICLE_LINK", "default link");
+		articleURL = bundle.getString("ARTICLE_LINK");
 		
 		
 		buttonWeb.setOnClickListener(new OnClickListener() {

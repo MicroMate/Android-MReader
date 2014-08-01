@@ -48,15 +48,17 @@ public class DeleteFeedDialogFragment extends DialogFragment {
 	    	public void onClick(DialogInterface dialog, int which) {
 	    		// The 'which' argument contains the index position of the selected item
 	    		
+	    		//removing from database
 	    		baza.deleteRssChannel(feeds.get(position).get_id());
 	    		baza.deleteArticles(feeds.get(position).get_id());
 	    		
 	    		Toast.makeText(getActivity(), "Deleted Feed _id: "+feeds.get(position).get_id(), Toast.LENGTH_SHORT).show();
 	    		
-	    		/*updating list view*/
-	    		feeds.clear();
-	    		feeds.addAll(baza.readAllRssChannels());	
+	    		//removing from navigation list
+	    		feeds.remove(position); 
 	    		
+	    		//displaying all articles 
+	    		((MainActivity)getActivity()).displayView(0); // position 0 = all articles
 	    		//refreshing navigation drawer list - feed list 
 	    		((MainActivity)getActivity()).updateFeedListView();
 	            	   

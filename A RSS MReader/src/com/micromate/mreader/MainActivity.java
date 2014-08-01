@@ -5,16 +5,20 @@ package com.micromate.mreader;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+//import android.app.ActionBar; // If supporting only API level 11 and higher
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.app.Fragment; // If supporting only API level 11 and higher
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+//import android.support.v4.app.Fragment; // If supporting API levels lower than 11
+//import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar; // lower then API 11
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,10 +31,10 @@ import com.micromate.mreader.database.Article;
 import com.micromate.mreader.database.DBoperacje;
 import com.micromate.mreader.database.Feed;
 import com.micromate.mreader.dialogs.DeleteFeedDialogFragment;
-//import android.support.v4.widget.SearchViewCompatIcs.MySearchView;
 import com.micromate.mreader.navigationdrawer.FeedListAdapter;
 
-public class MainActivity extends Activity {
+//public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -40,15 +44,10 @@ public class MainActivity extends Activity {
  
     // used to store app title
     private CharSequence mTitle;
- 
-    // slide menu items
-    //private String[] navMenuTitles;
-    //private TypedArray navMenuIcons;
- 
-   // private ArrayList<NavDrawerItem> navDrawerItems;
-   // private NavDrawerListAdapter adapter;
+  
+    //navigation drawer adapter
     private FeedListAdapter feedListAdapter;
-    // my
+    // 
     private DBoperacje baza;
     private List<Feed> feeds; //rss chanels
      
@@ -57,8 +56,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //action bar progress (refresh feeds)
-        ActionBar actionBar = getActionBar();
+        // retrieve a reference to this activity's ActionBar.
+        ActionBar actionBar = getSupportActionBar(); // getting action bar when API levels lower than 11
+        
+        // action bar progress (refresh feeds)
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME
             | ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_CUSTOM);
    
@@ -85,48 +86,59 @@ public class MainActivity extends Activity {
         //mDrawerList.setAdapter(adapter);
         mDrawerList.setAdapter(feedListAdapter);
  
+        // Set the list's click listener
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-        //item long click delete feed
+        
+        // Item list long click deleting a feed
         mDrawerList.setOnItemLongClickListener(new SlideMenuLongClickListener());
-                
-        if (mDrawerLayout != null){ //if portrait layout mDrawerLaout is not null
+        
+        // if mDraverLayout is not null (is null when screen orientation is landscape - drawer is not using)
+        if (mDrawerLayout != null){ //if portrait layout - mDrawerLaout is not null
 
-        	 // enabling action bar app icon and behaving it as toggle button
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);         //call requires API level 14 min 
+        	// enabling action bar app icon and behaving it as toggle button
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            // getActionBar().setHomeButtonEnabled(true);        // If supporting only API level 14 and higher
+            getSupportActionBar().setHomeButtonEnabled(true);    // If supporting API levels lower than 14 
         	
+            // Listen for Drawer Open and Close
         	mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
         			R.drawable.ic_drawer, //nav menu toggle icon
                 	R.string.app_name, // nav drawer open - description for accessibility
                 	R.string.app_name // nav drawer close - description for accessibility
         			) {
+        		
+        		// Callbacks for drawer open and closeevents
+        		/** Called when a drawer has settled in a completely closed state. */
         		public void onDrawerClosed(View view) {
         			getActionBar().setTitle(mTitle);
+        			
         			// calling onPrepareOptionsMenu() to show action bar icons
         			//invalidateOptionsMenu();
         		}
- 
-        		public void onDrawerOpened(View drawerView) {
-                
+        		
+        		/** Called when a drawer has settled in a completely open state. */
+        		public void onDrawerOpened(View drawerView) {                
         			getActionBar().setTitle(mDrawerTitle);
-                	
+        			
         			// calling onPrepareOptionsMenu() to hide action bar icons
         			//invalidateOptionsMenu();
         			
         		}
         	};
-        
+        	
+        	// Set the drawer toggle as the DrawerListener
         	mDrawerLayout.setDrawerListener(mDrawerToggle);	
         }
         
         if (savedInstanceState == null) {
             // on first time display view for first nav item
         	if (!feeds.isEmpty()) //when application has not added any feed
-        		displayView(0);   //przy starcie wyswietlana pierwsza pozycja z listy feed, ZMIENIC BY ZAPAMIETYWA�O STAN
+        		displayView(0);   //when application is opening display all articles, position 0 = all articles 
         }
     }
  
     /**
+     * Handle Navigation Click Events
      * Slide menu item click listener
      * */
     private class SlideMenuClickListener implements ListView.OnItemClickListener {
@@ -136,6 +148,7 @@ public class MainActivity extends Activity {
             displayView(position);
         }
     }
+    
     // long click listener delete feed
     private class SlideMenuLongClickListener implements ListView.OnItemLongClickListener {
   
@@ -151,26 +164,32 @@ public class MainActivity extends Activity {
 		}
     }
     
- 
+    
+    
+    // Adding Action Items
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	// Inflate the menu items for use in the action bar
     	MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        //return true;  //brak przycisk�w na action bar
         return super.onCreateOptionsMenu(menu);
     }
  
+    
+    // Handling clicks on action items
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
+    
+    	// mDraverLayout is not null (is null when screen orientation is landscape - drawer is not using)
     	if(mDrawerLayout!=null)
+    		// toggle nav drawer on selecting action bar app icon/title
     		if (mDrawerToggle.onOptionsItemSelected(item)) {
     			return true;
     		}
     	
     	Intent intent = null;
     	
-    	// Handle action bar actions click
+    	// Handle cliks on the action bar items
         switch (item.getItemId()) {
         case R.id.action_add:
         	//for dialog version
@@ -200,23 +219,23 @@ public class MainActivity extends Activity {
     }
  
     /***
-     * Called when invalidateOptionsMenu() is triggered
+     * Called whenever we call invalidateOptionsMenu()
      */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-    	if(mDrawerLayout!=null){
-    		// if nav drawer is opened, hide the action items
-    		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-    		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
-    	}
-        return super.onPrepareOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//    	if(mDrawerLayout!=null){
+//    		// if nav drawer is opened, hide the action items
+//    		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//    		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+//    	}
+//        return super.onPrepareOptionsMenu(menu);
+//    }
  
     
     /**
      * Diplaying fragment view for selected nav drawer list item
      * */
-    private void displayView(int position){
+    public void displayView(int position){
     	Fragment fragment = new ArticlesListFragment();
     	/**/
 		Bundle bundle = new Bundle();
@@ -231,9 +250,10 @@ public class MainActivity extends Activity {
 		}
 		fragment.setArguments(bundle);
 		
-		FragmentManager fragmentManager = getFragmentManager();
+		FragmentManager fragmentManager = getFragmentManager();  // if supporting only API level 11 and higher
+		//FragmentManager fragmentManager = getSupportFragmentManager();  // if supporting API levels lower than 11 
 		//go back to top, Pop all back stack states up (clear back stack)
-		fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); 
+		//fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE); 
     	FragmentTransaction transaction = fragmentManager.beginTransaction();
     	transaction.replace(R.id.frame_container, fragment);
     	transaction.commit();	
@@ -310,7 +330,9 @@ public class MainActivity extends Activity {
   	//this method is called from FeedUpdateTask class in method onPostExecute (after refreshing feeds)
   	public void updateArticleListView(){
   		ArticlesListFragment fragment = (ArticlesListFragment) getFragmentManager().findFragmentById(R.id.frame_container);
-  		fragment.updateArticleListView();
+  		//if supporting lower then API 11
+  		//ArticlesListFragment fragment = (ArticlesListFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container); 
+  		   		fragment.updateArticleListView();
   		Log.d("MainActivity", "updateArticleListView");
   	}
 }
