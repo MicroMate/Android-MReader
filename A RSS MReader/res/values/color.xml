@@ -15,14 +15,17 @@
  	<color name="action_bar_color">#333333</color>
    	<color name="action_bar_line_color">#555555</color>
 
+   	<!-- feed list -->
    	<color name="feed_list_title">#DDDDDD</color>
    	<color name="feed_list_link">#001111</color>
+   	<color name="feed_list_all_favorite">#AADDDD</color>
    	
    	<!-- article list fragment -->	
    	<color name="article_list_unread">#EEEEEE</color>
    	<color name="article_list_read">#D1D1D1</color>
    	<color name="article_list_read_bg">#005252</color>
-   	<color name="article_list_date">#001111</color>
+   	<color name="article_list_feed_title">#1E1E1E</color>
+   	<color name="article_list_date">#001818</color>
    	
    	<!-- article activity -->
    	<color name="article_text_bg">#003333</color>

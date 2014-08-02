@@ -44,17 +44,19 @@ public class ArticlesListAdapter extends ArrayAdapter<Article>{
 		//rowView = inflator.inflate(R.layout.articles_list_row, null);
 	        
 	    // 3. Get the two text view from the rowView	        
-		TextView labelView = (TextView) rowView.findViewById(R.id.title);
-		TextView valueView = (TextView) rowView.findViewById(R.id.date);
+		TextView articleTitleView = (TextView) rowView.findViewById(R.id.title);
+		TextView dateView = (TextView) rowView.findViewById(R.id.date);
+		TextView feedTitleView = (TextView) rowView.findViewById(R.id.article_list_feed_title);
 		final ToggleButton starButton = (ToggleButton) rowView.findViewById(R.id.button_star);
 	    	 
 	    // 4. Set the text for textView 
-	    labelView.setText(Html.fromHtml(articles.get(position).getTitle()));
-	    valueView.setText(articles.get(position).getListDate());
+	    articleTitleView.setText(Html.fromHtml(articles.get(position).getTitle()));
+	    dateView.setText(articles.get(position).getListDate());
+	    feedTitleView.setText(articles.get(position).getFeed_title());
 	    
 	    //if article was read change title and background colors
 	    if(articles.get(position).getUnread() == 1){
-	    	labelView.setTextColor(context.getResources().getColor(R.color.article_list_read));
+	    	articleTitleView.setTextColor(context.getResources().getColor(R.color.article_list_read));
 	    	rowView.setBackgroundColor(context.getResources().getColor(R.color.article_list_read_bg));
 	    }
 	    		    

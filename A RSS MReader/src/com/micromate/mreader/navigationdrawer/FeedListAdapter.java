@@ -59,6 +59,9 @@ public class FeedListAdapter extends BaseAdapter{
 	    linkView.setText(rssChannel.get(position).getLink());
 	    unreadQtyView.setText(String.valueOf(rssChannel.get(position).getUnreadQuantity()));
 
+	    if (position == 0 || position == 1)
+	    	titleView.setTextColor((context.getResources().getColor(R.color.feed_list_all_favorite)));
+	    
 	    // 5. retrn rowView
 	    return rowView;
 	}

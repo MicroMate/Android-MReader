@@ -11,6 +11,7 @@ public class Article {
 
 	private long id;
 	private long channel_id;
+	private String feed_title;
 	private String title ="title";
 	private String description ="title";
 	private String url;
@@ -44,6 +45,14 @@ public class Article {
 
 	public void setChannel_id(long channel_id) {
 		this.channel_id = channel_id;
+	}
+
+	public String getFeed_title() {
+		return feed_title;
+	}
+
+	public void setFeed_title(String feed_title) {
+		this.feed_title = feed_title;
 	}
 
 	public String getTitle() {

@@ -2,7 +2,7 @@
 /*
  * Klasa SQLiteOpenHelper - konfigurowanie baz danych i otwieranie polaczen
  *  1. Implementacja cyklu zycia
- *  - onCreate i onUpgrade - FRAMEWORK wywo¸uje te metody kiedy sa potrzebne
+ *  - onCreate i onUpgrade - FRAMEWORK wywoï¿½uje te metody kiedy sa potrzebne
  *  Jesli baza danych jeszcze nie istnieje aplikacjia ja tworzy
  */
 
@@ -17,7 +17,7 @@ import android.util.Log;
 public class DBopenHelper extends SQLiteOpenHelper{
 
 	  // Database Version                                  
-	  private static final int DB_VERSION = 2;
+	  private static final int DB_VERSION = 3;
 
 	  // Database Name
 	  public static final String DB_NAME = "rssMReader.db";
@@ -36,6 +36,7 @@ public class DBopenHelper extends SQLiteOpenHelper{
 	  //Column names of article table
 	  public static final String ARTICLE_COLUMN_ID = "_id";
 	  public static final String ARTICLE_COLUMN_WEBSITE_ID = "website_id";
+	  public static final String ARTICLE_COLUMN_FEED_TITLE = "feedTitle";
 	  public static final String ARTICLE_COLUMN_TITLE = "title";   
 	  public static final String ARTICLE_COLUMN_DESCRIPTION = "description";   		 
 	  public static final String ARTICLE_COLUMN_URL = "url";  
@@ -56,7 +57,8 @@ public class DBopenHelper extends SQLiteOpenHelper{
 	  private static final String UTWORZ_TABLICE = 
 		  "create table " + TABLE_ARTICLE + "(" + 
 	      ARTICLE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-	      ARTICLE_COLUMN_WEBSITE_ID + " INTEGER, " + 		
+	      ARTICLE_COLUMN_WEBSITE_ID + " INTEGER, " + 	
+	      ARTICLE_COLUMN_FEED_TITLE + " TEXT, " + 
 	      ARTICLE_COLUMN_TITLE + " TEXT," +
 	      ARTICLE_COLUMN_DESCRIPTION + " TEXT," +
 	      ARTICLE_COLUMN_URL + " TEXT," + 

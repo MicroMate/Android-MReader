@@ -38,7 +38,8 @@ public class DBoperacje {
     	db = dbOpenHelper.getWritableDatabase();
     	
         ContentValues values = new ContentValues();
-        values.put(DBopenHelper.ARTICLE_COLUMN_WEBSITE_ID, channel_id);      
+        values.put(DBopenHelper.ARTICLE_COLUMN_WEBSITE_ID, channel_id);   
+        values.put(DBopenHelper.ARTICLE_COLUMN_FEED_TITLE, article.getFeed_title());
         values.put(DBopenHelper.ARTICLE_COLUMN_TITLE, article.getTitle());
         values.put(DBopenHelper.ARTICLE_COLUMN_DESCRIPTION, article.getDescription()); 
         values.put(DBopenHelper.ARTICLE_COLUMN_URL, article.getUrl()); 
@@ -77,12 +78,13 @@ public class DBoperacje {
                 
                 article.setId(Integer.parseInt(cursor.getString(0)));
                 article.setChannel_id(Integer.parseInt(cursor.getString(1)));
-                article.setTitle(cursor.getString(2));
-                article.setDescription(cursor.getString(3));
-                article.setUrl(cursor.getString(4));
-                article.setDate(cursor.getString(5));
-                article.setUnread(cursor.getInt(6));
-                article.setIntFavorite(cursor.getInt(7));
+                article.setFeed_title(cursor.getString(2));
+                article.setTitle(cursor.getString(3));
+                article.setDescription(cursor.getString(4));
+                article.setUrl(cursor.getString(5));
+                article.setDate(cursor.getString(6));
+                article.setUnread(cursor.getInt(7));
+                article.setIntFavorite(cursor.getInt(8));
                   
                 //licznik (nr pozycji na liscie - mozna dodac do ziarna)
                 //wynik.setNr(licznik++);
@@ -125,13 +127,14 @@ public class DBoperacje {
                 
                 article.setId(Integer.parseInt(cursor.getString(0)));
                 article.setChannel_id(Integer.parseInt(cursor.getString(1)));
-                article.setTitle(cursor.getString(2));
-                article.setDescription(cursor.getString(3));
-                article.setUrl(cursor.getString(4));
-                article.setDate(cursor.getString(5));
-                article.setUnread(cursor.getInt(6));
-                article.setIntFavorite(cursor.getInt(7));
-                  
+                article.setFeed_title(cursor.getString(2));
+                article.setTitle(cursor.getString(3));
+                article.setDescription(cursor.getString(4));
+                article.setUrl(cursor.getString(5));
+                article.setDate(cursor.getString(6));
+                article.setUnread(cursor.getInt(7));
+                article.setIntFavorite(cursor.getInt(8));
+                
                 //licznik (nr pozycji na liscie - mozna dodac do ziarna)
                 //wynik.setNr(licznik++);
                 
@@ -168,13 +171,14 @@ public class DBoperacje {
                 
                 article.setId(cursor.getInt(0));
                 article.setChannel_id(cursor.getInt(1));
-                article.setTitle(cursor.getString(2));
-                article.setDescription(cursor.getString(3));
-                article.setUrl(cursor.getString(4));
-                article.setDate(cursor.getString(5));
-                article.setUnread(cursor.getInt(6));
-                article.setIntFavorite(cursor.getInt(7));
-                                    
+                article.setFeed_title(cursor.getString(2));
+                article.setTitle(cursor.getString(3));
+                article.setDescription(cursor.getString(4));
+                article.setUrl(cursor.getString(5));
+                article.setDate(cursor.getString(6));
+                article.setUnread(cursor.getInt(7));
+                article.setIntFavorite(cursor.getInt(8));
+                
                 // Adding article to list
                 lista.add(article);
                 

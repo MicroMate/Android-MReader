@@ -84,6 +84,7 @@ public class FeedRomeParser {
 				
 				SyndEntry entry = iterator.next();
 				
+				article.setFeed_title(syndFeed.getTitle());         //Feed Title
 				article.setTitle(entry.getTitle());					//Article Title
 				article.setUrl(entry.getUri());						//Article Web Link
 				article.setPublishedDate(entry.getPublishedDate());	//Article Published Date
@@ -142,6 +143,7 @@ public class FeedRomeParser {
 					break;
 				}
 				
+				article.setFeed_title(syndFeed.getTitle());         //Feed Title
 				article.setPublishedDate(ent.getPublishedDate());	//Article Published Date
 				article.setTitle(ent.getTitle());					//Article Title
 				article.setUrl(ent.getUri());						//Article Web Link

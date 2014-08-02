@@ -23,29 +23,43 @@
         android:layout_alignLeft="@+id/title"
         android:layout_below="@+id/title" >
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_horizontal"
-            android:paddingBottom="1dp"
-            android:text="Release Date"
-            android:textColor="@color/article_list_date"
-            android:textSize="14sp" 
-            />
-
    	 	<ToggleButton
    	 	    android:id="@+id/button_star"
         	android:button="@android:drawable/btn_star"
         	android:background="@android:color/transparent"
         	android:textOn=""
         	android:textOff=""
-        	android:layout_width="30dp"
-        	android:layout_height="30dp"
+        	android:layout_width="32dp"
+        	android:layout_height="32dp"
         	android:layout_alignParentRight="true" 
         	android:focusable="false"/>
+
+   	 	<LinearLayout
+   	 	    android:layout_width="match_parent"
+   	 	    android:layout_height="wrap_content"
+   	 	    android:layout_alignParentLeft="true"
+   	 	    android:layout_centerVertical="true"
+   	 	    android:layout_toLeftOf="@+id/button_star"
+   	 	    android:orientation="vertical" >
+
+   	 		<TextView
+   	 		    android:id="@+id/article_list_feed_title"
+   	 		    android:layout_width="wrap_content"
+   	 		    android:layout_height="wrap_content"
+   	 		    android:textColor="@color/article_list_feed_title"
+   	 		    android:textSize="15sp"
+   	 		    android:text="Feed Title" 
+   	 		    android:singleLine="true" />
+
+   	 		<TextView
+   	 		    android:id="@+id/date"
+   	 		    android:layout_width="wrap_content"
+   	 		    android:layout_height="wrap_content"
+   	 		    android:text="Release Date"
+   	 		    android:textColor="@color/article_list_date"
+   	 		    android:textSize="14sp" />
+
+   	 	</LinearLayout>
 
     </RelativeLayout>
   
