@@ -69,7 +69,7 @@ public class SettingActivity extends Activity {
 			if (deleteAuto.isChecked())
 				deleteArticleKeptQty.setEnabled(true);
 
-			final String qtySummary = "The oldest articles well be deleted except of the favorite articles.\nQ-ty entry: ";
+			final String qtySummary = "The oldest articles will be deleted except of the favorite articles.\nQ-ty entry: ";
 			String qtyEntry = (String) deleteArticleKeptQty.getEntry();
 			deleteArticleKeptQty.setSummary(qtySummary+qtyEntry);
 				

@@ -47,7 +47,8 @@ public class FeedAddRssActivity extends Activity {
 	    textView = (TextView)findViewById(R.id.textView2);
 	    button = (Button)findViewById(R.id.button1);
 		
-	  
+	    //setting cursor on the end of text
+	    editText.setSelection(editText.length());
 			
 	    button.setOnClickListener(new View.OnClickListener() {
 				

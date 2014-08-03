@@ -12,14 +12,12 @@
     <string name="pref_delete_enabled">Auto Delete</string>
     <string name="pref_delete_enabled_summary">Automatic delete an articles</string>
     <string name="pref_delete_articles_kept">Q-ty of the articles will be kept</string>
-    <string name="pref_delete_articles_summary">The oldest articles well be deleted except of the favorites</string>
+    <string name="pref_delete_articles_summary">The oldest articles will be deleted except of the favorites</string>
     
     <!-- NOTIFI -->
-    <string name="pref_noti">Notifications</string>
-    
+    <string name="pref_noti">Notifications</string> 
     <string name="pref_noti_enabled">Enabled</string>
     <string name="pref_noti_enabled_summary">Show notification on new articles </string>
-    <string name="title_activity_setting">SettingActivity</string>
     <string name="hello_world">Hello world!</string>
     
 </resources>

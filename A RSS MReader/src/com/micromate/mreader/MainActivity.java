@@ -35,7 +35,8 @@ import com.micromate.mreader.navigationdrawer.FeedListAdapter;
 
 //public class MainActivity extends Activity {
 public class MainActivity extends ActionBarActivity {
-    private DrawerLayout mDrawerLayout;
+ 
+	private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
  
@@ -50,6 +51,8 @@ public class MainActivity extends ActionBarActivity {
     // 
     private DBoperacje baza;
     private List<Feed> feeds; //rss chanels
+    
+    private static final int CODE_ADD_FEED_ACTIVITY = 1;
      
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +70,12 @@ public class MainActivity extends ActionBarActivity {
  
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
- 
+        
         // create instance of database class
         baza = new DBoperacje(this);
         feeds = new ArrayList<Feed>();
-        //adding two first position in navigation drawer
-        feeds.add(new Feed("All Articles", "Articles of all added feeds ", null, null));
-        feeds.add(new Feed("Favorite Articles ", "Articles checked with the star", null, null));
-        // adding all feeds from database
-        feeds.addAll(baza.readAllRssChannels());
-        
-        // method counting unread articles and setting in feed
-        countUnreadArticles();         
+        //adding feeds to list from database
+        addFeedstoList();  
   
         // setting the navigation drawer list adapter
         feedListAdapter = new FeedListAdapter(getApplicationContext(), feeds);
@@ -137,6 +134,20 @@ public class MainActivity extends ActionBarActivity {
         }
     }
  
+    private void addFeedstoList() {
+    	
+        //adding two first position in navigation drawer
+        feeds.add(new Feed("All Articles", "Articles of all added feeds ", null, null));
+        feeds.add(new Feed("Favorite Articles ", "Articles checked with the star", null, null));
+        // adding all feeds from database
+        feeds.addAll(baza.readAllRssChannels());
+        
+        // method counting unread articles and setting in feed
+        countUnreadArticles(); 
+    
+    }
+    
+    
     /**
      * Handle Navigation Click Events
      * Slide menu item click listener
@@ -197,7 +208,7 @@ public class MainActivity extends ActionBarActivity {
 //        	dialog.show(getFragmentManager(), "addFeed");
         	//for activity version
         	intent = new Intent(this,FeedAddRssActivity.class);
-        	startActivity(intent);
+        	startActivityForResult(intent, CODE_ADD_FEED_ACTIVITY);
         	return true;
         case R.id.action_refresh:
         	MenuItem menuItem = item;
@@ -335,4 +346,25 @@ public class MainActivity extends ActionBarActivity {
   		   		fragment.updateArticleListView();
   		Log.d("MainActivity", "updateArticleListView");
   	}
+
+  	
+    @Override
+ 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+ 		// TODO Auto-generated method stub
+ 		super.onActivityResult(requestCode, requestCode, data);
+ 		
+ 		// Check which request we're responding to
+ 	    if (requestCode == CODE_ADD_FEED_ACTIVITY) {  
+ 	    	
+ 	    	//update feed and articles list after feed added
+ 	    	updateArticleListView();
+ 	    	//adding feeds to list from database
+ 	    	
+ 	    	feeds.clear();
+ 	    	addFeedstoList();
+ 	    	feedListAdapter.notifyDataSetChanged();
+ 	    	
+ 	    }
+ 	}
+
 }

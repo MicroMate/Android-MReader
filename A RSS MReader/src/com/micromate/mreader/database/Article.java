@@ -13,7 +13,7 @@ public class Article {
 	private long channel_id;
 	private String feed_title;
 	private String title ="title";
-	private String description ="title";
+	private String description ="The feed does not contain article description visit the website";
 	private String url;
 	private String date;
 	private Integer unread = 0;  //SQLite does not have a Boolean type.   0 = unread, 1 = read article 
