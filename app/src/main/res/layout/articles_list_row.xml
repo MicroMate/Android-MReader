@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingTop="1dp"
+        android:text="Article title"
+        android:textColor="@color/article_list_unread"
+        android:textSize="17sp" 
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_below="@+id/title" >
+
+   	 	<ToggleButton
+   	 	    android:id="@+id/button_star"
+        	android:button="@android:drawable/btn_star"
+        	android:background="@android:color/transparent"
+        	android:textOn=""
+        	android:textOff=""
+        	android:layout_width="32dp"
+        	android:layout_height="32dp"
+        	android:layout_alignParentRight="true" 
+        	android:focusable="false"/>
+
+   	 	<LinearLayout
+   	 	    android:layout_width="match_parent"
+   	 	    android:layout_height="wrap_content"
+   	 	    android:layout_alignParentLeft="true"
+   	 	    android:layout_centerVertical="true"
+   	 	    android:layout_toLeftOf="@+id/button_star"
+   	 	    android:orientation="vertical" >
+
+   	 		<TextView
+   	 		    android:id="@+id/article_list_feed_title"
+   	 		    android:layout_width="wrap_content"
+   	 		    android:layout_height="wrap_content"
+   	 		    android:textColor="@color/article_list_feed_title"
+   	 		    android:textSize="15sp"
+   	 		    android:text="Feed Title" 
+   	 		    android:singleLine="true" />
+
+   	 		<TextView
+   	 		    android:id="@+id/date"
+   	 		    android:layout_width="wrap_content"
+   	 		    android:layout_height="wrap_content"
+   	 		    android:text="Release Date"
+   	 		    android:textColor="@color/article_list_date"
+   	 		    android:textSize="14sp" />
+
+   	 	</LinearLayout>
+
+    </RelativeLayout>
+  
+</RelativeLayout>

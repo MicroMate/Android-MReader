@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Feeds</item>
+        <item >Add feed </item>
+        <item >Refresh</item>
+        <item >Settings</item>
+      </string-array>
+     
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_action_view_as_list</item>
+        <item>@drawable/ic_action_new</item>
+        <item>@drawable/ic_action_refresh</item>
+        <item>@drawable/ic_action_settings</item>
+    </array>
+    
+    
+    <!-- Preferenses Alarm Intervals-->
+    <string-array name="syncFrequency">
+        <item name="1">1 minute</item>
+        <item name="5">5 minutes</item>
+        <item name="15">15 minutes</item>
+        <item name="30">30 minutes</item>
+        <item name="60">1 hour</item>
+        <item name="120">2 hours</item>
+        <item name="240">4 hours</item>
+        <item name="360">6 hours</item>
+        <item name="480">8 hours</item>
+        <item name="1440">1 day</item>  
+    </string-array>
+    
+	<string-array name="syncFrequencyValues">
+        <item name="1">1</item>
+        <item name="5">5</item>
+        <item name="15">15</item>
+        <item name="30">30</item>
+        <item name="60">60</item>
+        <item name="120">120</item>
+        <item name="240">240</item>
+        <item name="360">360</item>
+        <item name="480">480</item>
+        <item name="1440">1440</item>
+    </string-array>
+    
+	<!-- Quantity of not deleting articles  -->
+	<string-array name="keep_articles">
+        <item name="20">20 articles</item>
+        <item name="30">30 articles</item>
+        <item name="40">40 articles</item>
+        <item name="50">50 articles</item>
+        <item name="60">60 articles</item>
+        <item name="70">70 articles</item>
+        <item name="80">80 articles</item>
+    </string-array>
+    
+	<string-array name="keep_articles_values">
+        <item name="20">20</item>
+        <item name="30">30</item>
+        <item name="40">40</item>
+        <item name="50">50</item>
+        <item name="60">60</item>
+        <item name="70">70</item>
+        <item name="80">80</item>
+    </string-array>
+    
+</resources>

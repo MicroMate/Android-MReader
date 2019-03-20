@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.micromate.mreader.ArticleActivity" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/article_text_bg" >
+
+        <TextView
+            android:id="@+id/article_descriptionView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/article_description"
+            android:textColor="@color/article_text"
+            android:layout_marginLeft="5dp"
+            android:textSize="17sp" />
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+
+        <!-- horizontal line -->
+       	<View
+    		android:layout_width="fill_parent"
+    		android:layout_height="1dip"
+    		android:background="@color/article_abar_line"
+		/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" >
+            
+            <ImageView
+            	android:id="@+id/articleButtonVisitSite"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_toRightOf="@+id/articleButtonDelete"
+            	android:src="@drawable/ic_action_web_site"
+            	android:layout_marginLeft="50dp" />
+
+        	<ImageView
+            	android:id="@+id/articleButtonDelete"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	
+            	android:src="@drawable/ic_action_remove" />
+        	</RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

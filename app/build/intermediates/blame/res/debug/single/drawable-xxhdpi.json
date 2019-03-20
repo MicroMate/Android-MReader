@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_view_as_list.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_view_as_list.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_remove.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_remove.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_refresh.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_refresh.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_new.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_new.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_mreader.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_mreader.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_web_site.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_web_site.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_picture.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_picture.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_action_settings.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_action_settings.png"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable-xxhdpi/ic_home.png",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable-xxhdpi/ic_home.png"
+    }
+]

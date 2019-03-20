@@ -1,0 +1,98 @@
+[
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_textfield_searchview_right_holo_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_textfield_searchview_right_holo_dark.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/action_bar_bg.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/action_bar_bg.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/nav_list_item_bg_normal.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/nav_list_item_bg_normal.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_search_dropdown_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_search_dropdown_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_textfield_searchview_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_textfield_searchview_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/counter_bg.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/counter_bg.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_spinner_ab_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_spinner_ab_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_search_dropdown_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_search_dropdown_dark.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/feed_list_unread_bg.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/feed_list_unread_bg.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/nav_list_item_bg_pressed.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/nav_list_item_bg_pressed.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_tab_indicator_ab_holo.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_tab_indicator_ab_holo.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_background_transition_holo_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_spinner_ab_holo_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_spinner_ab_holo_dark.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/nav_list_selector.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/nav_list_selector.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_textfield_searchview_right_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_textfield_searchview_right_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_list_selector_holo_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_ic_clear_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_ic_clear_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_light.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/add_feed_shape.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/drawable/add_feed_shape.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_item_background_holo_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_ic_clear.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_ic_clear.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/drawable/abc_textfield_searchview_holo_dark.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/drawable/abc_textfield_searchview_holo_dark.xml"
+    }
+]

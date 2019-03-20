@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   
+    <!-- SYNCHRO -->
+    <string name="pref_sync">Synchronization</string>
+    
+    <string name="pref_update_enabled">Auto Update</string>
+    <string name="pref_update_enabled_summary">Automatic update an articles</string>
+    <string name="pref_update_interval">Update interval</string>
+    <string name="pref_update_interval_summary">Interval time</string>
+    <!--  --> 
+    <string name="pref_delete_enabled">Auto Delete</string>
+    <string name="pref_delete_enabled_summary">Automatic delete an articles</string>
+    <string name="pref_delete_articles_kept">Q-ty of the articles will be kept</string>
+    <string name="pref_delete_articles_summary">The oldest articles will be deleted except of the favorites</string>
+    
+    <!-- NOTIFI -->
+    <string name="pref_noti">Notifications</string> 
+    <string name="pref_noti_enabled">Enabled</string>
+    <string name="pref_noti_enabled_summary">Show notification on new articles </string>
+    <string name="hello_world">Hello world!</string>
+    
+</resources>

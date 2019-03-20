@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/anim/abc_slide_in_top.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/anim/abc_fade_out.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/anim/abc_fade_in.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/anim/abc_slide_out_top.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/home/michal/.android/build-cache/c61ddfe4ebe1bfc6bda3d59785132cb4ad07e7e0/output/res/anim/abc_slide_out_bottom.xml"
+    }
+]

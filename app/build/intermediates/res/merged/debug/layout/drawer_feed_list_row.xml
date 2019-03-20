@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/nav_list_selector" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/channel_unreadQty"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/channel_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="4dip"
+            android:paddingLeft="8dip"
+            android:paddingTop="8dip"
+            android:text="@string/feed_title"
+            android:textColor="@color/feed_list_title"
+            android:textSize="16sp"
+            android:singleLine="true" 
+            />
+
+        <TextView
+            android:id="@+id/channel_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+       	    android:paddingBottom="6dip"
+            android:paddingLeft="8dip"
+            android:text="@string/feed_link"
+            android:textColor="@color/feed_list_link"
+            android:textSize="12sp" 
+            android:singleLine="true"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/channel_unreadQty"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/feed_list_unread_bg"
+        android:gravity="center"
+        android:textColor="@color/counter_text_color"
+       	android:maxLines="1"
+        android:textSize="16sp" />
+
+</RelativeLayout>

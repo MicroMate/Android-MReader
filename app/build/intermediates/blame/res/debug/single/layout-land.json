@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/layout-land/activity_main.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/layout-land/activity_main.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/layout-land/activity_add_feed.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/layout-land/activity_add_feed.xml"
+    },
+    {
+        "merged": "/home/michal/WorkspaceAndroid/Android-MReader/app/build/intermediates/res/merged/debug/layout-land/activity_article.xml",
+        "source": "/home/michal/WorkspaceAndroid/Android-MReader/app/src/main/res/layout-land/activity_article.xml"
+    }
+]
